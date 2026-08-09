@@ -120,3 +120,6 @@ ignitemediatech.com, pub_11115, RESELLER
 improvedigital.com, 2297, RESELLER
 improvedigital.com, 2464, RESELLER
 pokkt.com, 6246, RESELLER, c45702d9311e25fd
+
+# AdMob, sold directly by this publisher.
+google.com, pub-8581289661889758, DIRECT, f08c47fec0942fa0
