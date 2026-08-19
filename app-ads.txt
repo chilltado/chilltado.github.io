@@ -123,3 +123,6 @@ pokkt.com, 6246, RESELLER, c45702d9311e25fd
 
 # AdMob, sold directly by this publisher.
 google.com, pub-8581289661889758, DIRECT, f08c47fec0942fa0
+
+# Liftoff (Vungle), sold directly by this publisher.
+vungle.com, 6a855737c030b2ab908b9713, DIRECT, c107d686becd2d77
