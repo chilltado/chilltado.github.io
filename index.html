@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chilltado — game developer</title>
+<meta name="description" content="Game developer. Gameplay systems, multiplayer, liveops and backend. BotRaid shipped on Google Play, AceRiders in production, plus two apps for the Moochies smartwatch.">
+<link rel="canonical" href="https://chilltado.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="chilltado — game developer">
+<meta property="og:description" content="Gameplay systems, multiplayer, liveops and backend. BotRaid shipped on Google Play; AceRiders in production.">
+<meta property="og:url" content="https://chilltado.github.io/">
+<meta property="og:image" content="https://chilltado.github.io/assets/br-feature.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0d13">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d13; --bg2:#0f121a; --panel:#151a25; --panel2:#1b2130;
+  --line:#2b3446; --line2:#3d4a61;
+  --ink:#e9eef7; --dim:#93a1b8; --faint:#6a7688;
+  --red:#ef4b42; --teal:#3ad9d2; --gold:#f5c451;
+  --shadow:#04060a;
+  --max:1120px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  overflow-x:hidden;
+  background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);
+  background-size:32px 32px;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+h1,h2,h3,h4,.px-font{font-family:"Press Start 2P",monospace;font-weight:400;line-height:1.5;margin:0;letter-spacing:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+button{font-family:inherit}
+
+/* pixel frame ------------------------------------------------ */
+.px{
+  --n:6px;
+  clip-path:polygon(
+    0 var(--n), var(--n) var(--n), var(--n) 0,
+    calc(100% - var(--n)) 0, calc(100% - var(--n)) var(--n), 100% var(--n),
+    100% calc(100% - var(--n)), calc(100% - var(--n)) calc(100% - var(--n)), calc(100% - var(--n)) 100%,
+    var(--n) 100%, var(--n) calc(100% - var(--n)), 0 calc(100% - var(--n))
+  );
+}
+.pixel-img{image-rendering:pixelated}
+
+/* chrome ----------------------------------------------------- */
+header{position:sticky;top:0;z-index:60;background:#0b0d13f2;border-bottom:2px solid var(--line)}
+.nav{display:flex;align-items:center;gap:4px;height:66px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a.tab{flex:none}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:auto;font-family:"Press Start 2P";font-size:12px;color:var(--ink)}
+.brand img{width:30px;height:30px;flex:none;image-rendering:pixelated}
+.nav a.tab{
+  text-decoration:none;color:var(--dim);font-size:11px;font-family:"Press Start 2P";
+  padding:9px 11px;border:2px solid transparent;transition:color .12s,border-color .12s,background .12s;
+}
+.nav a.tab:hover{color:var(--ink);border-color:var(--line)}
+.nav a.tab[aria-current]{color:var(--bg);background:var(--teal);border-color:var(--teal)}
+@media(max-width:720px){.brand span{display:none}.nav a.tab{padding:8px 7px;font-size:9.5px}}
+
+.view[hidden]{display:none}
+.fade{animation:fade .2s steps(4,end)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* type ------------------------------------------------------- */
+.eyebrow{font-family:"Press Start 2P";font-size:10px;color:var(--teal);margin:0;line-height:1.8}
+.lede{color:var(--dim);font-size:15.5px;max-width:64ch;margin:0}
+.muted{color:var(--faint);font-size:13px}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  background:var(--teal);color:#04231f;font-family:"Press Start 2P";font-size:11px;
+  padding:14px 18px;border:2px solid var(--teal);cursor:pointer;
+  box-shadow:4px 4px 0 var(--shadow);transition:transform .08s steps(2),box-shadow .08s steps(2);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--shadow)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn.red{background:var(--red);border-color:var(--red);color:#1a0503}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+.chips li{font-size:12px;color:var(--dim);border:2px solid var(--line);padding:6px 10px;background:#ffffff06}
+
+.sec{padding:74px 0 0}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.sec-head h2{font-size:15px;white-space:nowrap;color:var(--ink)}
+.sec-head .line{flex:1;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 8px)}
+.sec-head span{font-size:9.5px;color:var(--faint);font-family:"Press Start 2P";white-space:nowrap}
+
+/* hero ------------------------------------------------------- */
+.hero{position:relative;padding:96px 0 62px;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:-40% -20% auto -20%;height:760px;z-index:0;pointer-events:none;
+  background:radial-gradient(38% 44% at 22% 40%,#3ad9d21f,transparent 70%),
+             radial-gradient(34% 42% at 80% 14%,#ef4b421c,transparent 70%);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(19px,3.5vw,34px);margin:22px 0 24px;max-width:19ch;line-height:1.55}
+.hero h1 em{font-style:normal;color:var(--teal);text-shadow:3px 3px 0 #0c3b39}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .avail{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;color:var(--dim);margin-top:26px;font-family:"Press Start 2P";line-height:1.7}
+.hero .avail i{width:10px;height:10px;background:#61f08d;display:block;animation:blink 1.4s steps(1,end) infinite}
+@keyframes blink{0%,60%{opacity:1}61%,100%{opacity:.25}}
+
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
+@media(max-width:1080px){.hero-grid{grid-template-columns:1fr}.hero-art{display:none}}
+
+/* as tres unidades: tamanhos e alturas diferentes de proposito */
+.hero-art{position:relative;aspect-ratio:1/.92}
+.hero-art img{position:absolute;filter:drop-shadow(0 14px 0 #04060a55);animation:float 5.5s ease-in-out infinite}
+.hero-art .u-brawler{width:60%;left:20%;top:0;z-index:3}
+.hero-art .u-turret{width:44%;left:0;top:30%;z-index:2;animation-delay:.8s;animation-duration:6.5s}
+.hero-art .u-mortar{width:40%;left:58%;top:44%;z-index:1;transform:scaleX(-1);animation-delay:1.6s;animation-duration:7s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes floatx{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-10px)}}
+.hero-art .u-mortar{animation-name:floatx}
+.hero-tag{position:absolute;right:-4px;bottom:6%;font-family:"Press Start 2P";font-size:8px;color:var(--faint);writing-mode:vertical-rl;letter-spacing:.2em}
+
+/* chassis concepts ------------------------------------------- */
+.bots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:26px}
+.bots figure{background:radial-gradient(62% 58% at 50% 42%,#1e2534,#0f131b)}
+.bots img{width:100%;aspect-ratio:1;object-fit:contain;padding:16px}
+.bots figcaption{text-align:center;font-family:"Press Start 2P";font-size:9px;color:var(--dim);padding:11px 6px}
+
+/* marquee ---------------------------------------------------- */
+.marquee{margin-top:58px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee + .marquee{margin-top:12px}
+.track{display:flex;gap:12px;width:max-content;animation:slide 64s linear infinite}
+.marquee.rev .track{animation-direction:reverse}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.track img{height:130px;width:auto;border:2px solid var(--line);object-fit:cover;opacity:.8;transition:opacity .15s,border-color .15s}
+.track img:hover{opacity:1;border-color:var(--teal)}
+@media(max-width:640px){.track img{height:94px}}
+
+/* work ------------------------------------------------------- */
+.work{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+.proj{
+  position:relative;display:block;text-decoration:none;overflow:hidden;
+  border:2px solid var(--line);background:var(--panel);min-height:300px;
+  box-shadow:6px 6px 0 var(--shadow);
+  transition:transform .1s steps(2),box-shadow .1s steps(2),border-color .15s;
+}
+.proj:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--shadow);border-color:var(--line2)}
+.proj.feature{grid-column:1 / -1;min-height:400px}
+.proj .art{position:absolute;inset:0}
+.proj .art img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:opacity .2s}
+.proj:hover .art img{opacity:.72}
+.proj .art::after{content:"";position:absolute;inset:0;background:linear-gradient(185deg,#0b0d1333 0%,#0b0d13de 56%,#0b0d13 100%)}
+.proj .body{position:relative;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-height:inherit}
+.proj.feature .body{min-height:400px;padding:30px}
+.proj .status{
+  position:absolute;top:20px;left:24px;display:inline-flex;align-items:center;gap:8px;
+  font-family:"Press Start 2P";font-size:9px;padding:8px 11px;
+  background:#0b0d13e0;border:2px solid var(--line2);color:var(--dim);
+}
+.proj .status.live{color:#61f08d;border-color:#61f08d66}
+.proj .status.live::before{content:"";width:8px;height:8px;background:#61f08d;animation:blink 1.4s steps(1,end) infinite}
+.proj h3{font-size:clamp(13px,2vw,19px);margin-bottom:14px;line-height:1.5}
+.proj .kicker{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.proj p{margin:0;color:var(--dim);font-size:14px;max-width:56ch}
+.proj .more{margin-top:18px;font-size:10px;color:var(--teal);font-family:"Press Start 2P"}
+.proj:hover .more span{margin-left:10px}
+.proj .more span{margin-left:6px;transition:margin .12s steps(2)}
+@media(max-width:760px){.work{grid-template-columns:1fr}.proj,.proj.feature{min-height:280px}.proj.feature .body{min-height:280px;padding:22px}}
+
+/* credits ---------------------------------------------------- */
+.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.cred{border:2px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 var(--shadow);padding:20px;transition:border-color .15s}
+.cred:hover{border-color:var(--line2)}
+.cred .top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.cred .top img{width:56px;height:56px;border:2px solid var(--line2);flex:none}
+.cred h3{font-size:12px;line-height:1.5;margin-bottom:8px}
+.cred .top a{font-size:11px;color:var(--teal);text-decoration:none;border-bottom:2px solid #3ad9d240}
+.cred .top a:hover{border-color:var(--teal)}
+.credtext{margin:0 0 14px;color:var(--dim);font-size:13px;line-height:1.65}
+.cred .shots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.cred .shots img{width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--line);cursor:zoom-in}
+.cred .shots img:hover{border-color:var(--teal)}
+
+/* capabilities ----------------------------------------------- */
+.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.caps div{border:2px solid var(--line);background:var(--panel);padding:20px;box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s}
+.caps div:hover{border-color:var(--line2)}
+.caps h3{font-size:11px;margin-bottom:14px;color:var(--teal)}
+.caps p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.7}
+
+/* band ------------------------------------------------------- */
+.band{margin-top:80px;border-top:2px solid var(--line);border-bottom:2px solid var(--line);background:var(--bg2);padding:64px 0}
+.band h2{font-size:clamp(14px,2.6vw,22px);max-width:22ch;margin-bottom:20px;line-height:1.6}
+.band p{color:var(--dim);max-width:56ch;margin:0 0 28px}
+
+/* project hero ----------------------------------------------- */
+.phero{position:relative;padding:72px 0 44px;overflow:hidden;border-bottom:2px solid var(--line)}
+.phero .bg{position:absolute;inset:0;z-index:0}
+.phero .bg img{width:100%;height:100%;object-fit:cover;opacity:.3}
+.phero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0b0d13a8 0%,#0b0d13d8 55%,#0b0d13 96%)}
+.phero .wrap{position:relative;z-index:1}
+.phero .idrow{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:20px 0}
+.phero .appicon{width:78px;height:78px;border:2px solid var(--line2);box-shadow:5px 5px 0 var(--shadow)}
+.phero .wordmark{height:clamp(48px,7vw,72px);width:auto;object-fit:contain}
+.phero h1{font-size:clamp(18px,3.4vw,30px);margin:20px 0}
+.phero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px;margin-top:36px;border-top:2px solid var(--line);padding-top:22px}
+.facts div span{display:block;font-size:9px;color:var(--faint);margin-bottom:9px;font-family:"Press Start 2P";line-height:1.6}
+.facts div b{font-weight:500;font-size:13.5px;color:var(--ink)}
+
+.trailer-row{display:grid;grid-template-columns:400px 1fr;gap:26px;align-items:start;margin-top:26px}
+.trailer-row .player{margin-top:0}
+.trailer-row .stats{margin-top:0;align-self:stretch;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.trailer-row .stats div{display:flex;flex-direction:column;justify-content:center}
+@media(max-width:900px){.trailer-row{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin-top:28px}
+.stats div{border:2px solid var(--line);background:var(--panel);padding:18px;box-shadow:5px 5px 0 var(--shadow)}
+.stats b{display:block;font-family:"Press Start 2P";font-size:22px;color:var(--gold);line-height:1.3}
+.stats span{display:block;margin-top:10px;font-size:12px;color:var(--dim)}
+
+.block{padding:64px 0 0}
+.block h2{font-size:clamp(13px,2.4vw,18px);margin-bottom:18px;line-height:1.5}
+.block > .wrap > p{color:var(--dim);max-width:70ch;margin-top:0}
+
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px;margin-top:26px;padding:0;list-style:none}
+.feats li{border:2px solid var(--line);padding:20px;background:var(--panel);box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s}
+.feats li:hover{border-color:var(--line2)}
+.feats h3{font-size:11px;margin-bottom:14px;line-height:1.6}
+.feats p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.7}
+.feats .num{font-family:"Press Start 2P";font-size:10px;color:var(--red);display:block;margin-bottom:12px}
+
+.itchstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;text-decoration:none;align-items:start}
+.itchstrip img{width:100%;border:2px solid var(--line);box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s,transform .1s steps(2)}
+.itchstrip:hover img{border-color:var(--teal);transform:translate(2px,2px)}
+.itchstrip span{grid-column:1/-1;font-family:"Press Start 2P";font-size:9.5px;color:var(--teal);margin-top:4px}
+
+.itchhead{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.itchhead img{width:200px;border:2px solid var(--line2);box-shadow:6px 6px 0 var(--shadow)}
+.itchhead > div{flex:1;min-width:260px}
+.itchhead p{color:var(--dim);margin:14px 0 18px;max-width:56ch}
+
+/* galleries -------------------------------------------------- */
+.gal{display:grid;gap:14px;margin-top:26px}
+.gal.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.gal.shots{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+figure{margin:0;border:2px solid var(--line);overflow:hidden;background:var(--panel);cursor:zoom-in;box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s,transform .1s steps(2),box-shadow .1s steps(2)}
+figure:hover{border-color:var(--teal);transform:translate(2px,2px);box-shadow:3px 3px 0 var(--shadow)}
+.gal.g3 img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.gal.shots img{width:100%;aspect-ratio:9/16;object-fit:cover}
+figcaption{padding:10px 13px;font-size:12px;color:var(--faint);border-top:2px solid var(--line)}
+
+.devices{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px}
+.device{width:190px;border:2px solid var(--line2);background:#0f131b;padding:10px;box-shadow:6px 6px 0 var(--shadow)}
+.device img{width:100%;image-rendering:pixelated}
+.device p{margin:12px 2px 2px;font-size:9px;color:var(--faint);text-align:center;font-family:"Press Start 2P";line-height:1.6}
+
+.player{position:relative;margin-top:26px;border:2px solid var(--line);overflow:hidden;background:#05070a;box-shadow:6px 6px 0 var(--shadow)}
+.player video{width:100%;display:block;aspect-ratio:9/16;background:#05070a}
+.player button{position:absolute;inset:0;width:100%;border:0;cursor:pointer;background:center/cover no-repeat var(--poster,url(assets/botraid-trailer-poster.jpg));display:grid;place-items:center}
+.player button::before{content:"";position:absolute;inset:0;background:#0b0d1375}
+.player button span{
+  position:relative;display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#04231f;
+  font-family:"Press Start 2P";font-size:11px;padding:15px 20px;border:2px solid var(--teal);box-shadow:4px 4px 0 var(--shadow);
+}
+
+.yt{position:relative;border:2px solid var(--line);background:#05070a;aspect-ratio:16/9;overflow:hidden}
+.yt img{width:100%;height:100%;object-fit:cover;opacity:.8}
+.yt iframe{width:100%;height:100%;border:0;display:block}
+.yt button{position:absolute;inset:0;width:100%;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.yt button span{background:var(--red);color:#1a0503;font-family:"Press Start 2P";font-size:10px;padding:12px 16px;border:2px solid var(--red);box-shadow:4px 4px 0 var(--shadow)}
+.yt:hover img{opacity:1}
+
+.notice{margin-top:24px;border:2px solid var(--line);border-left:6px solid var(--teal);padding:16px 18px;background:#ffffff06;color:var(--dim);font-size:13.5px}
+
+/* about ------------------------------------------------------ */
+.about{padding:84px 0 0}
+.about h1{font-size:clamp(16px,3vw,26px);margin-bottom:26px;max-width:22ch;line-height:1.6}
+.about p{color:var(--dim);max-width:66ch}
+.contact{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px}
+
+/* lightbox --------------------------------------------------- */
+#lb{position:fixed;inset:0;z-index:100;background:#04060af2;display:grid;place-items:center;padding:30px;cursor:zoom-out}
+#lb[hidden]{display:none}
+#lb img{max-width:min(1200px,94vw);max-height:88vh;width:auto;border:2px solid var(--line2);box-shadow:8px 8px 0 var(--shadow)}
+#lb .x{position:absolute;top:20px;right:24px;color:var(--dim);font-family:"Press Start 2P";font-size:14px;background:none;border:0;cursor:pointer}
+
+footer{border-top:2px solid var(--line);margin-top:86px;padding:30px 0 44px;color:var(--faint);font-size:12.5px}
+.footer-in{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+footer a{color:var(--faint);text-decoration:none}
+footer a:hover{color:var(--teal)}
+footer img{height:60px;width:auto;image-rendering:pixelated}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#/"><img src="assets/chilltado-mark.png" alt=""><span>chilltado</span></a>
+    <a class="tab" href="#/">Work</a>
+    <a class="tab" href="#/botraid">BotRaid</a>
+    <a class="tab" href="#/aceriders">AceRiders</a>
+    <a class="tab" href="#/packet">Packet</a>
+    <a class="tab" href="#/smartwatch">Smartwatch</a>
+    <a class="tab" href="#/itch">Itch</a>
+    <a class="tab" href="#/about">About</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HOME ================= -->
+<div class="view" id="v-home">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+      <p class="eyebrow">GAME DEVELOPER · GAMEPLAY · SYSTEMS · LIVEOPS</p>
+      <h1>I build games <em>end to end</em>.</h1>
+      <p class="lede">Gameplay systems, backend, tools and the release itself. Shipped on mobile, and open to any platform, genre or team where that work is useful.</p>
+      <div class="cta">
+        <a class="btn px" href="#/botraid">SEE THE WORK</a>
+        <a class="btn ghost px" href="mailto:chilltadolab@gmail.com">GET IN TOUCH</a>
+      </div>
+      <p class="avail"><i></i> OPEN TO OPPORTUNITIES</p>
+      </div>
+
+      <div class="hero-art">
+        <img class="u-brawler" src="assets/br-bot-brawler.png" alt="" loading="lazy">
+        <img class="u-turret" src="assets/br-bot-turret.png" alt="" loading="lazy">
+        <img class="u-mortar" src="assets/br-bot-mortar.png" alt="" loading="lazy">
+        <span class="hero-tag">BOTRAID · LIVE</span>
+      </div>
+    </div>
+
+    <div class="marquee">
+      <div class="track" data-loop>
+        <img src="assets/br-feature.jpg" alt="" loading="lazy">
+        <img src="assets/br-s1.jpg" alt="" loading="lazy">
+        <img src="assets/mo-4.jpg" alt="" loading="lazy">
+        <img src="assets/br-s3.jpg" alt="" loading="lazy">
+        <img src="assets/mo-5.jpg" alt="" loading="lazy">
+        <img src="assets/br-s5.jpg" alt="" loading="lazy">
+        <img src="assets/cr-packet-1.jpg" alt="" loading="lazy">
+        <img src="assets/mo-2.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+    <div class="marquee rev">
+      <div class="track" data-loop>
+        <img src="assets/br-s2.jpg" alt="" loading="lazy">
+        <img src="assets/aceriders-gameplay.jpg" alt="" loading="lazy">
+        <img src="assets/br-s4.jpg" alt="" loading="lazy">
+        <img src="assets/mo-1.jpg" alt="" loading="lazy">
+        <img src="assets/br-s2.jpg" alt="" loading="lazy">
+        <img src="assets/sw-poster.jpg" alt="" loading="lazy">
+        <img src="assets/cr-packet-2.jpg" alt="" loading="lazy">
+        <img src="assets/mo-3.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><h2>SELECTED WORK</h2><i class="line"></i><span>05</span></div>
+    <div class="work">
+
+      <a class="proj feature" href="#/botraid">
+        <div class="art"><img src="assets/br-feature.jpg" alt="BotRaid — Idle Strategy TD" loading="lazy"></div>
+        <span class="status live">LIVE ON GOOGLE PLAY</span>
+        <div class="body">
+          <h3>BotRaid: Idle Strategy TD</h3>
+          <div class="kicker"><span>Solo — design, code, release</span><span>Unity 6 · URP</span><span>12 languages</span></div>
+          <p>An idle strategy TD where the map itself is the stake. Grid platforms dock edge to edge, every core builds robots forever, and whoever holds the ground holds the core.</p>
+          <span class="more">CASE STUDY<span>&gt;</span></span>
+        </div>
+      </a>
+
+      <a class="proj" href="#/aceriders">
+        <div class="art"><img src="assets/aceriders-gameplay.jpg" alt="Hoverboard rider concept art for AceRiders" loading="lazy"></div>
+        <span class="status">IN PRODUCTION</span>
+        <div class="body">
+          <h3>AceRiders</h3>
+          <div class="kicker"><span>Solo</span><span>Arcade racer</span></div>
+          <p>Portrait hoverboard racing in 60–120 second bursts, with drift mini-turbos and a track editor that makes the community the content pipeline.</p>
+          <span class="more">CASE STUDY<span>&gt;</span></span>
+        </div>
+      </a>
+
+      <a class="proj" href="#/packet">
+        <div class="art"><img src="assets/cr-packet-1.jpg" alt="Packet delivery level" loading="lazy"></div>
+        <span class="status live">ON GOOGLE PLAY</span>
+        <div class="body">
+          <h3>Packet</h3>
+          <div class="kicker"><span>3D platformer maker</span><span>Android</span></div>
+          <p>A delivery platformer where the levels are the content: run the route, or build your own, clear it, and publish it for everyone else to run.</p>
+          <span class="more">CASE STUDY<span>&gt;</span></span>
+        </div>
+      </a>
+
+      <a class="proj" href="#/smartwatch">
+        <div class="art"><img src="assets/mo-4.jpg" alt="Virtual pet town map on a smartwatch screen" loading="lazy"></div>
+        <span class="status">SHIPPED</span>
+        <div class="body">
+          <h3>Tamagotchi</h3>
+          <div class="kicker"><span>Virtual pet</span><span>Moochies smartwatch</span></div>
+          <p>A pet-raising loop — feeding, washing, shopping, mini-games — designed to stay readable and tappable on a 184×224 watch screen.</p>
+          <span class="more">CASE STUDY<span>&gt;</span></span>
+        </div>
+      </a>
+
+      <a class="proj" href="#/smartwatch">
+        <div class="art"><img src="assets/sw-poster.jpg" alt="Astronomy game running on a smartwatch" loading="lazy"></div>
+        <span class="status">SHIPPED</span>
+        <div class="body">
+          <h3>SpaceQuizz</h3>
+          <div class="kicker"><span>Educational</span><span>Moochies smartwatch</span></div>
+          <p>Quiz rounds, ordering the planets, naming moons and tracing constellations — a science game for the same watch.</p>
+          <span class="more">CASE STUDY<span>&gt;</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div></div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><h2>ALSO WORKED ON</h2><i class="line"></i><span>02</span></div>
+    <div class="creds">
+
+      <div class="cred">
+        <div class="top">
+          <img src="assets/cr-zooba-icon.png" alt="Zooba icon">
+          <div>
+            <h3>Zooba</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.wildlife.games.battle.royale.free.zooba" target="_blank" rel="noopener">Google Play &gt;</a>
+          </div>
+        </div>
+        <p class="credtext">Multiplayer work: characters, maps, items and game modes.</p>
+        <div class="shots">
+          <img src="assets/cr-zooba-1.jpg" alt="Zooba gameplay" loading="lazy">
+          <img src="assets/cr-zooba-2.jpg" alt="Zooba gameplay" loading="lazy">
+          <img src="assets/cr-zooba-3.jpg" alt="Zooba gameplay" loading="lazy">
+        </div>
+      </div>
+
+      <div class="cred">
+        <div class="top">
+          <img src="assets/cr-warmachines-icon.png" alt="War Machines icon">
+          <div>
+            <h3>War Machines</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.fungames.battletanksbeta" target="_blank" rel="noopener">Google Play &gt;</a>
+          </div>
+        </div>
+        <p class="credtext">Multiplayer work: characters, maps, items and game modes.</p>
+        <div class="shots">
+          <img src="assets/cr-warmachines-1.jpg" alt="War Machines gameplay" loading="lazy">
+          <img src="assets/cr-warmachines-2.jpg" alt="War Machines gameplay" loading="lazy">
+          <img src="assets/cr-warmachines-3.jpg" alt="War Machines gameplay" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div></div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><h2>JAMS &amp; PROTOTYPES</h2><i class="line"></i><span>ITCH.IO</span></div>
+    <a class="itchstrip" href="#/itch">
+      <img src="assets/itch-dangerroom-cover.jpg" alt="DangerRoom" loading="lazy">
+      <img src="assets/itch-resourcefight-cover.jpg" alt="Resourcefight" loading="lazy">
+      <img src="assets/itch-hit-n-brawl-cover.jpg" alt="Hit 'n' Brawl" loading="lazy">
+      <img src="assets/itch-emancipsychic-cover.jpg" alt="Emancipsychic" loading="lazy">
+      <span>4 SMALL GAMES, MOST PLAYABLE IN THE BROWSER &gt;</span>
+    </a>
+  </div></div>
+
+  <div class="sec"><div class="wrap">
+    <div class="sec-head"><h2>WHAT I DO</h2><i class="line"></i><span>CAPABILITIES</span></div>
+    <div class="caps">
+      <div><h3>GAMEPLAY</h3><p>Simulation, combat, economy and progression built as isolated systems with one door per concern, so a feature is a local change instead of a scavenger hunt.</p></div>
+      <div><h3>MULTIPLAYER</h3><p>Competitive loops without real-time netcode where it does not earn its cost: leaderboards, brackets, async replays as opponents — and shipped work on live multiplayer titles.</p></div>
+      <div><h3>LIVEOPS</h3><p>Daily and weekly mission tracks, seasonal standings, remote config, A/B-able tuning and store offers — content that can be changed without a client release.</p></div>
+      <div><h3>BACKEND + SHIPPING</h3><p>Go services for leaderboards, identity and cloud save, plus the release itself: store listings, ratings forms, crash reporting and ad mediation.</p></div>
+      </div>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <h2>Looking for someone to build the hard part?</h2>
+    <p>Full-time, contract or collaboration — gameplay, systems, tools or the whole game.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn px" href="mailto:chilltadolab@gmail.com">EMAIL ME</a>
+      <a class="btn ghost px" href="https://github.com/chilltado" target="_blank" rel="noopener">GITHUB</a>
+    </div>
+  </div></div>
+</div>
+
+<!-- ================= BOTRAID ================= -->
+<div class="view" id="v-botraid" hidden>
+  <div class="phero">
+    <div class="bg"><img src="assets/br-s5.jpg" alt="" loading="lazy"></div>
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · SHIPPED</p>
+      <div class="idrow">
+        <img class="appicon" src="assets/br-store-icon.png" alt="BotRaid app icon">
+        <img class="wordmark" src="assets/botraid-wordmark.png" alt="BotRaid — Idle Strategy TD">
+      </div>
+      <p class="lede">Most idle games are a number that only goes up. This one is a map — and the whole map is up for grabs.</p>
+      <div class="cta">
+        <a class="btn px" href="https://play.google.com/store/apps/details?id=com.chilltado.botconquest&hl=en" target="_blank" rel="noopener">GOOGLE PLAY</a>
+        <button class="btn ghost px" type="button" data-scroll="trailer">TRAILER</button>
+      </div>
+      <div class="facts">
+        <div><span>ROLE</span><b>Solo developer</b></div>
+        <div><span>SCOPE</span><b>Design, code, release</b></div>
+        <div><span>ENGINE</span><b>Unity 6 · URP</b></div>
+        <div><span>PLATFORM</span><b>Android</b></div>
+        <div><span>BACKEND</span><b>Go</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" id="trailer">
+    <div class="wrap">
+      <h2>TRAILER</h2>
+      <p>28 seconds, captured in game.</p>
+      <div class="trailer-row">
+      <div class="player" data-player>
+        <video controls preload="none" playsinline poster="assets/botraid-trailer-poster.jpg">
+          <source src="assets/botraid-trailer.mp4" type="video/mp4">
+        </video>
+        <button type="button" aria-label="Play the BotRaid trailer"><span>&#9654; WATCH</span></button>
+      </div>
+      <div class="stats">
+        <div><b>50</b><span>Buildable chassis</span></div>
+        <div><b>30</b><span>Levels per chassis</span></div>
+        <div><b>62</b><span>Unit behaviours</span></div>
+        <div><b>20</b><span>Career missions</span></div>
+        <div><b>12</b><span>Languages</span></div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>THE DESIGN PROBLEM</h2>
+      <p>Idle games rarely have stakes: progress only accumulates, so nothing that happens while you are away can matter. BotRaid puts the idle loop on contested ground instead. Platforms dock edge to edge, each with a core at its middle that builds robots forever. Whoever has an army standing on a platform owns its core — take the ground and the core comes with it, lose the ground and it goes with it. The war runs continuously, including while the app is closed.</p>
+      <ul class="feats">
+        <li><span class="num">01</span><h3>NO BUILD PHASE</h3><p>No battle phase, no wave counter, no start button. One continuous war you are always in the middle of.</p></li>
+        <li><span class="num">02</span><h3>A PLATFORM EVERY 45s</h3><p>A hostile grid docks onto your territory on a clock — and you can call the next one in early when you want the fight now.</p></li>
+        <li><span class="num">03</span><h3>CORES CHANGE HANDS</h3><p>Hold enemy ground for 8 seconds and the core flips, along with everything it produces. Your home platform is the one thing that can never be taken.</p></li>
+        <li><span class="num">04</span><h3>PARTS BECOME ROBOTS</h3><p>Wrecked robots drop parts and parts become robots, so the army in front of you decides the army behind you.</p></li>
+        <li><span class="num">05</span><h3>BEHAVIOUR YOU SEE</h3><p>A mortar arcs over the line, a grappler drags a target off its tile, a mine trips on contact, a kamikaze runs in on a fuse. Nothing is a hidden multiplier.</p></li>
+        <li><span class="num">06</span><h3>COMMAND, NOT MICRO</h3><p>Robots pick their own targets. You decide what gets built, where it stands and where the line moves next — and you can pause the whole war to think.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>IN GAME</h2>
+      <div class="gal shots">
+        <figure><img src="assets/br-s1.jpg" alt="A hostile platform docking, with mission objectives running" loading="lazy"><figcaption>A platform docking in</figcaption></figure>
+        <figure><img src="assets/br-s2.jpg" alt="The board seen in full" loading="lazy"><figcaption>The board</figcaption></figure>
+        <figure><img src="assets/br-s3.jpg" alt="Grids docking edge to edge" loading="lazy"><figcaption>Grids dock edge to edge</figcaption></figure>
+        <figure><img src="assets/br-s4.jpg" alt="Held territory with houses and production" loading="lazy"><figcaption>Held ground</figcaption></figure>
+        <figure><img src="assets/br-s5.jpg" alt="Two armies meeting across the line" loading="lazy"><figcaption>The war</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>CHASSIS CONCEPTS</h2>
+      <p>Each chassis is a silhouette first — a player has to read what a robot does from across the board, before any tooltip.</p>
+      <div class="bots">
+        <figure><img src="assets/br-bot-brawler.png" alt="Brawler concept art" loading="lazy"><figcaption>BRAWLER</figcaption></figure>
+        <figure><img src="assets/br-bot-grappler.png" alt="Grappler concept art" loading="lazy"><figcaption>GRAPPLER</figcaption></figure>
+        <figure><img src="assets/br-bot-missiler.png" alt="Missiler concept art" loading="lazy"><figcaption>MISSILER</figcaption></figure>
+        <figure><img src="assets/br-bot-healer.png" alt="Healer concept art" loading="lazy"><figcaption>HEALER</figcaption></figure>
+        <figure><img src="assets/br-bot-shielder.png" alt="Shielder concept art" loading="lazy"><figcaption>SHIELDER</figcaption></figure>
+        <figure><img src="assets/br-bot-railgun.png" alt="Railgun concept art" loading="lazy"><figcaption>RAILGUN</figcaption></figure>
+        <figure><img src="assets/br-bot-landmine.png" alt="Landmine concept art" loading="lazy"><figcaption>LANDMINE</figcaption></figure>
+        <figure><img src="assets/br-bot-overlord.png" alt="Overlord concept art" loading="lazy"><figcaption>OVERLORD</figcaption></figure>
+        <figure><img src="assets/br-bot-turret.png" alt="Turret concept art" loading="lazy"><figcaption>TURRET</figcaption></figure>
+        <figure><img src="assets/br-bot-mortar.png" alt="Mortar concept art" loading="lazy"><figcaption>MORTAR</figcaption></figure>
+        <figure><img src="assets/br-bot-sentinel.png" alt="Sentinel concept art" loading="lazy"><figcaption>SENTINEL</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>BUILT WITH</h2>
+      <ul class="chips" style="margin-top:20px">
+        <li>Unity 6 · URP</li><li>C#</li><li>UI Toolkit</li><li>Custom ECS-lite architecture</li>
+        <li>Go backend</li><li>Cloud save</li><li>Play Games Services</li><li>Firebase Crashlytics</li>
+        <li>Remote Config</li><li>LevelPlay mediation</li><li>Daily/weekly liveops</li><li>12 localisations</li>
+      </ul>
+      <div class="notice">Fully offline-capable: no part of the gameplay depends on the network. Leaderboards and cloud save are optional and degrade silently when there is no connection.</div>
+      <p class="muted" style="margin-top:22px">
+        <a href="https://chilltado.github.io/botraid-legal/privacy-policy">Privacy policy</a> ·
+        <a href="https://chilltado.github.io/botraid-legal/terms-of-service">Terms of service</a>
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ACERIDERS ================= -->
+<div class="view" id="v-aceriders" hidden>
+  <div class="phero">
+    <div class="bg"><img src="assets/aceriders-gameplay.jpg" alt="" loading="lazy"></div>
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · IN PRODUCTION</p>
+      <div class="idrow"><img class="wordmark" src="assets/aceriders-logo.png" alt="AceRiders"></div>
+      <p class="lede">A hoverboard racer with the movement of Sonic Riders and the mini-turbo of Mario Kart, in 1–2 minute races where the community builds the tracks.</p>
+      <div class="facts">
+        <div><span>ROLE</span><b>Solo developer</b></div>
+        <div><span>GENRE</span><b>Arcade racer</b></div>
+        <div><span>ENGINE</span><b>Unity 6 · URP</b></div>
+        <div><span>PLATFORM</span><b>Android, portrait</b></div>
+        <div><span>FORMAT</span><b>3 laps, 6 riders</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>DESIGN PILLARS</h2>
+      <ul class="feats">
+        <li><span class="num">01</span><h3>A RACE FITS IN A BREAK</h3><p>60 to 120 seconds from tap to result. Every other system in the game is budgeted against that number.</p></li>
+        <li><span class="num">02</span><h3>SPEED IS EARNED</h3><p>Drift, trick, clean landing, rail. There is no passive boost — the boost bar is a scoreboard for execution.</p></li>
+        <li><span class="num">03</span><h3>COMMUNITY = CONTENT</h3><p>The track editor is a game mode, not an extra feature. The game does not depend on one person authoring tracks forever.</p></li>
+        <li><span class="num">04</span><h3>ASYNC, NOT REAL TIME</h3><p>Opponents are replays of real players rendered as ordinary riders. No real-time netcode and no racing AI to write.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>CONCEPT</h2>
+      <p>Two pieces from the ongoing production — the main menu and the gameplay concept. Not captures of the running build.</p>
+      <div class="gal shots" style="grid-template-columns:repeat(auto-fit,minmax(240px,320px))">
+        <figure><img src="assets/aceriders-menu.jpg" alt="Main menu concept with daily rival, weekly league and district progress" loading="lazy"><figcaption>Main menu</figcaption></figure>
+        <figure><img src="assets/aceriders-gameplay.jpg" alt="Gameplay concept from behind the rider" loading="lazy"><figcaption>Gameplay concept</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>CONTROL</h2>
+      <p>The board moves forward on its own — no input is needed to travel. A slow lateral drag steers; a fast one starts a drift; dragging back brakes and charges a jump whose height is proportional to the drag when you release. Low skill floor, high ceiling.</p>
+      <div class="notice">The character is purely cosmetic — every stat comes from the board. Ranked runs on normalised specs, so upgrades never buy time on the leaderboard.</div>
+      <ul class="chips" style="margin-top:24px">
+        <li>Unity 6 · URP</li><li>C#</li><li>Config → Controller → Renderer</li><li>Offline-first</li>
+        <li>Replays as opponents</li><li>UGC track editor</li><li>Go backend</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PACKET ================= -->
+<div class="view" id="v-packet" hidden>
+  <div class="phero">
+    <div class="bg"><img src="assets/cr-packet-1.jpg" alt="" loading="lazy"></div>
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · SHIPPED</p>
+      <div class="idrow">
+        <img class="appicon" src="assets/cr-packet-icon.png" alt="Packet app icon">
+        <h1>Packet</h1>
+      </div>
+      <p class="lede">A 3D delivery platformer where the levels are the content: run the route, or build your own, clear it yourself, and publish it for everyone else to run.</p>
+      <div class="cta">
+        <a class="btn px" href="https://play.google.com/store/apps/details?id=com.hackathon38.group38.packet" target="_blank" rel="noopener">GOOGLE PLAY</a>
+      </div>
+      <div class="facts">
+        <div><span>GENRE</span><b>3D platformer maker</b></div>
+        <div><span>PLATFORM</span><b>Android</b></div>
+        <div><span>CONTENT</span><b>Player-built routes</b></div>
+        <div><span>SCORING</span><b>Per-level leaderboards</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>VIDEO</h2>
+      <div class="yt" data-yt="Ov8fMyr8Gew" style="max-width:760px">
+        <img src="https://i.ytimg.com/vi/Ov8fMyr8Gew/maxresdefault.jpg" alt="Packet video" loading="lazy">
+        <button type="button" aria-label="Play the Packet video"><span>&#9654; PLAY</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>BUILD, CLEAR, PUBLISH</h2>
+      <p>A level only reaches other players once its author has cleared it themselves — which keeps the published set playable without anyone moderating it by hand. Every route is scored, so the same level is worth running again for a better time.</p>
+      <div class="gal g3">
+        <figure><img src="assets/cr-packet-1.jpg" alt="Making a delivery through a level" loading="lazy"><figcaption>Make the delivery</figcaption></figure>
+        <figure><img src="assets/cr-packet-2.jpg" alt="Building a route in the editor" loading="lazy"><figcaption>Build your own routes</figcaption></figure>
+        <figure><img src="assets/cr-packet-3.jpg" alt="Clearing a level to publish it" loading="lazy"><figcaption>Clear it to publish it</figcaption></figure>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SMARTWATCH ================= -->
+<div class="view" id="v-smartwatch" hidden>
+  <div class="phero">
+    <div class="bg"><img src="assets/sw-poster.jpg" alt="" loading="lazy"></div>
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · SHIPPED</p>
+      <h1>Two apps for a smartwatch</h1>
+      <p class="lede">A virtual pet and a science game for the Moochies kids' smartwatch, both built for a 184×224 screen — roughly a fifth of a phone's pixel budget, tapped by fingers that are not adult-sized.</p>
+      <div class="facts">
+        <div><span>DEVICE</span><b>Moochies smartwatch</b></div>
+        <div><span>RESOLUTION</span><b>184×224</b></div>
+        <div><span>AUDIENCE</span><b>Kids</b></div>
+        <div><span>APPS</span><b>Tamagotchi · SpaceQuizz</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>TAMAGOTCHI</h2>
+      <p>Raise a pet, feed it, wash it and take it to town. At this size the interface has to be one decision per screen: the map is the navigation, icons are the labels, and nothing depends on text a young player has to read.</p>
+      <div class="devices">
+        <div class="device"><img src="assets/mo-1.jpg" alt="Main screen with the pet in its room" loading="lazy"><p>MAIN</p></div>
+        <div class="device"><img src="assets/mo-2.jpg" alt="Pet selection screen" loading="lazy"><p>SET PET</p></div>
+        <div class="device"><img src="assets/mo-3.jpg" alt="Inventory screen" loading="lazy"><p>INVENTORY</p></div>
+        <div class="device"><img src="assets/mo-4.jpg" alt="Town map with shop and home markers" loading="lazy"><p>MAP</p></div>
+        <div class="device"><img src="assets/mo-5.jpg" alt="Washing mini game" loading="lazy"><p>WASH</p></div>
+      </div>
+      <ul class="feats">
+        <li><span class="num">01</span><h3>CARE</h3><p>Feeding, washing and play keep the pet's state up, each through its own short mini-game rather than a menu.</p></li>
+        <li><span class="num">02</span><h3>TOWN</h3><p>A map screen turns navigation into a place: home, shop and activities are markers a child taps, not a list.</p></li>
+        <li><span class="num">03</span><h3>COLLECT</h3><p>An inventory of items and outfits gives the loop something to spend on and something to come back for.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>SPACEQUIZZ</h2>
+      <p>A science game for the same watch: quiz rounds, ordering the planets by hand, naming moons and tracing constellations star by star. Recorded on a phone and squashed back to the watch’s 184×224 proportions.</p>
+      <div class="devices">
+        <div class="device"><img src="assets/sw-1.gif" alt="Menu with the game modes" loading="lazy"><p>MENU</p></div>
+        <div class="device"><img src="assets/sw-2.gif" alt="Quiz question about the solar system" loading="lazy"><p>QUIZ</p></div>
+        <div class="device"><img src="assets/sw-3.gif" alt="Dragging planets into order" loading="lazy"><p>ORDER THE PLANETS</p></div>
+        <div class="device"><img src="assets/sw-4.gif" alt="Naming the moons of a planet" loading="lazy"><p>NAME THE MOONS</p></div>
+        <div class="device"><img src="assets/sw-5.gif" alt="Tracing the Columba constellation" loading="lazy"><p>CONSTELLATIONS</p></div>
+        <div class="device"><img src="assets/sw-6.gif" alt="Tracing the Capricornus constellation" loading="lazy"><p>CAPRICORNUS</p></div>
+      </div>
+      <ul class="feats">
+        <li><span class="num">01</span><h3>DRAG, NOT TYPE</h3><p>Every answer is a drag or a tap on the thing itself — planets into slots, a line between stars — because a watch has no keyboard and a kid has no patience for one.</p></li>
+        <li><span class="num">02</span><h3>TIMED ROUNDS</h3><p>Each round runs against a clock with a score, so replaying the same content has a reason to happen.</p></li>
+        <li><span class="num">03</span><h3>REAL CONTENT</h3><p>Actual moons, actual constellations. The game teaches names that exist, which is the whole point of putting it on a kid's wrist.</p></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ITCH ================= -->
+<div class="view" id="v-itch" hidden>
+  <div class="phero">
+    <div class="bg"><img src="assets/itch-dangerroom-2.jpg" alt="" loading="lazy"></div>
+    <div class="wrap">
+      <p class="eyebrow">JAMS &amp; PROTOTYPES</p>
+      <h1>itch.io</h1>
+      <p class="lede">Small games built fast — jam entries and prototypes where the point was to get a loop standing and see whether it was fun. Most run straight in the browser.</p>
+      <div class="cta">
+        <a class="btn px" href="https://chilltado.itch.io/" target="_blank" rel="noopener">CHILLTADO.ITCH.IO</a>
+      </div>
+      <div class="facts">
+        <div><span>GAMES</span><b>4</b></div>
+        <div><span>PLATFORM</span><b>Browser · desktop</b></div>
+        <div><span>SCOPE</span><b>Jam builds and prototypes</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="itchhead">
+        <img src="assets/itch-dangerroom-cover.jpg" alt="DangerRoom cover">
+        <div>
+          <h2>DANGERROOM</h2>
+          <p>Build, power up and survive each wave in small interconnected rooms.</p>
+          <a class="btn ghost px" href="https://chilltado.itch.io/dangerroom" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
+        </div>
+      </div>
+      <div class="gal g3">
+        <figure><img src="assets/itch-dangerroom-1.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-dangerroom-2.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-dangerroom-3.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+  <section class="block">
+    <div class="wrap">
+      <div class="itchhead">
+        <img src="assets/itch-resourcefight-cover.jpg" alt="Resourcefight cover">
+        <div>
+          <h2>RESOURCEFIGHT</h2>
+          <p>Run missions broadcast to the whole city to win the resources you need to survive.</p>
+          <a class="btn ghost px" href="https://chilltado.itch.io/resourcefight" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
+        </div>
+      </div>
+      <div class="gal g3">
+        <figure><img src="assets/itch-resourcefight-1.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-resourcefight-2.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-resourcefight-3.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+  <section class="block">
+    <div class="wrap">
+      <div class="itchhead">
+        <img src="assets/itch-hit-n-brawl-cover.jpg" alt="Hit 'n' Brawl cover">
+        <div>
+          <h2>HIT 'N' BRAWL</h2>
+          <p>A brawler crossed with a shooter and a card game.</p>
+          <a class="btn ghost px" href="https://chilltado.itch.io/hit-n-brawl" target="_blank" rel="noopener">DOWNLOAD &gt;</a>
+        </div>
+      </div>
+      <div class="gal g3">
+        <figure><img src="assets/itch-hit-n-brawl-1.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-hit-n-brawl-2.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-hit-n-brawl-3.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+  <section class="block">
+    <div class="wrap">
+      <div class="itchhead">
+        <img src="assets/itch-emancipsychic-cover.jpg" alt="Emancipsychic cover">
+        <div>
+          <h2>EMANCIPSYCHIC</h2>
+          <p>Cross the city dodging enemies to win freedom for psychics — and a new international holiday.</p>
+          <a class="btn ghost px" href="https://chilltado.itch.io/emancipsychic" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
+        </div>
+      </div>
+      <div class="gal g3">
+        <figure><img src="assets/itch-emancipsychic-1.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-emancipsychic-2.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
+        <figure><img src="assets/itch-emancipsychic-3.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div class="view" id="v-about" hidden>
+  <div class="about">
+    <div class="wrap">
+      <p class="eyebrow">ABOUT</p>
+      <h1>I make games from first prototype to release.</h1>
+      <p>Gameplay systems, tools, backend, storefront and whatever else shipping asks for. My work has been mobile so far, but the part I actually do — gameplay systems, tools, backend and getting a build out the door — is not platform-specific, and I am open to any opportunity in games.</p>
+      <p>I work in Unity 6 with URP and C#, on an architecture where every feature owns exactly one concern. That is what makes it possible to keep two mid-sized projects running in parallel without one becoming the other's debt.</p>
+      <p>BotRaid is live on Google Play, localised into 12 languages, with cloud save, weekly leaderboards and full offline progression. AceRiders is in production. I also worked on Zooba, War Machines and Packet, and on two apps for the Moochies smartwatch.</p>
+
+      <div class="sec">
+        <div class="sec-head"><h2>STACK</h2><i class="line"></i><span>DAY TO DAY</span></div>
+        <div class="caps">
+          <div><h3>ENGINE</h3><p>Unity 6, URP, UI Toolkit, VFX Graph, Addressables, Burst.</p></div>
+          <div><h3>CODE</h3><p>C#, system-oriented architecture with ScriptableObject data, editor test coverage.</p></div>
+          <div><h3>BACKEND</h3><p>Go, protobuf, containers. Leaderboards, cloud save, identity.</p></div>
+          <div><h3>SHIPPING</h3><p>Google Play, Play Games Services, Firebase Crashlytics, Remote Config, ad mediation, IARC and Data Safety.</p></div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <a class="btn px" href="mailto:chilltadolab@gmail.com">CHILLTADOLAB@GMAIL.COM</a>
+        <a class="btn ghost px" href="https://github.com/chilltado" target="_blank" rel="noopener">GITHUB</a>
+        <a class="btn ghost px" href="https://chilltado.itch.io/" target="_blank" rel="noopener">ITCH.IO</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div id="lb" hidden><button class="x" aria-label="Close">X</button><img src="" alt=""></div>
+
+<footer>
+  <div class="wrap footer-in">
+    <span style="display:flex;align-items:center;gap:14px"><img src="assets/chilltado-logo.png" alt="chilltado">© <span id="year">2026</span></span>
+    <span>
+      <a href="https://chilltado.github.io/botraid-legal/privacy-policy">Privacy</a> ·
+      <a href="https://chilltado.github.io/botraid-legal/terms-of-service">Terms</a> ·
+      <a href="https://chilltado.itch.io/" target="_blank" rel="noopener">itch.io</a> ·
+      <a href="mailto:chilltadolab@gmail.com">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var routes={'#/':'v-home','#/botraid':'v-botraid','#/aceriders':'v-aceriders','#/packet':'v-packet','#/smartwatch':'v-smartwatch','#/itch':'v-itch','#/about':'v-about'};
+  var titles={'v-home':'chilltado — game developer','v-botraid':'BotRaid — chilltado','v-aceriders':'AceRiders — chilltado','v-packet':'Packet — chilltado','v-smartwatch':'Smartwatch — chilltado','v-itch':'itch.io — chilltado','v-about':'About — chilltado'};
+  var views=document.querySelectorAll('.view'), tabs=document.querySelectorAll('.nav a.tab');
+
+  function render(){
+    var hash=location.hash, id=routes[hash]||'v-home';
+    if(!routes[hash]) hash='#/';
+    views.forEach(function(v){
+      var on=v.id===id;
+      v.hidden=!on;
+      if(on){v.classList.remove('fade');void v.offsetWidth;v.classList.add('fade');}
+    });
+    tabs.forEach(function(t){
+      if(t.getAttribute('href')===hash) t.setAttribute('aria-current','page');
+      else t.removeAttribute('aria-current');
+    });
+    document.title=titles[id];
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',render);
+  if(!location.hash) location.replace('#/');
+  render();
+
+  // A marquee só emenda se a faixa contiver a lista duas vezes: a animação anda -50%.
+  document.querySelectorAll('[data-loop]').forEach(function(t){ t.innerHTML += t.innerHTML; });
+
+  document.querySelectorAll('[data-scroll]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.getElementById(b.dataset.scroll).scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  document.querySelectorAll('[data-yt]').forEach(function(box){
+    box.querySelector('button').addEventListener('click',function(){
+      box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+box.dataset.yt+'?autoplay=1" title="Packet" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    });
+  });
+
+  document.querySelectorAll('[data-player]').forEach(function(p){
+    var v=p.querySelector('video'), b=p.querySelector('button');
+    b.addEventListener('click',function(){ b.remove(); v.play(); });
+  });
+
+  var lb=document.getElementById('lb'), lbImg=lb.querySelector('img');
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#lb')){ lb.hidden=true; return; }
+    var src=null;
+    var fig=e.target.closest('figure');
+    if(fig && fig.querySelector('img')) src=fig.querySelector('img');
+    else if(e.target.matches('.cred .shots img')) src=e.target;
+    if(src){ lbImg.src=src.src; lbImg.alt=src.alt; lb.hidden=false; }
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') lb.hidden=true; });
+
+  document.getElementById('year').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
