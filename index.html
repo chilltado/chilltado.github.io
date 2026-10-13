@@ -263,6 +263,7 @@ figcaption{padding:10px 13px;font-size:12px;color:var(--faint);border-top:2px so
 .device p{margin:12px 2px 2px;font-size:9px;color:var(--faint);text-align:center;font-family:"Press Start 2P";line-height:1.6}
 
 .player{position:relative;margin-top:26px;border:2px solid var(--line);overflow:hidden;background:#05070a;box-shadow:6px 6px 0 var(--shadow)}
+.player iframe{width:100%;display:block;aspect-ratio:9/16;border:0;background:#05070a}
 .player video{width:100%;display:block;aspect-ratio:9/16;background:#05070a}
 .player button{position:absolute;inset:0;width:100%;border:0;cursor:pointer;background:center/cover no-repeat var(--poster,url(assets/botraid-trailer-poster.jpg));display:grid;place-items:center}
 .player button::before{content:"";position:absolute;inset:0;background:#0b0d1375}
@@ -527,14 +528,9 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
   <section class="block" id="trailer">
     <div class="wrap">
       <h2>TRAILER</h2>
-      <p>21 seconds, captured in game.</p>
+      <p>Captured in game.</p>
       <div class="trailer-row">
-      <div class="player" data-player>
-        <video controls preload="none" playsinline poster="assets/botraid-trailer-poster.jpg">
-          <source src="assets/botraid-trailer.mp4" type="video/mp4">
-        </video>
-        <button type="button" aria-label="Play the BotRaid trailer"><span>&#9654; WATCH</span></button>
-      </div>
+      <div class="player"><iframe src="https://www.youtube-nocookie.com/embed/rutav7YaCOA" title="BotRaid trailer" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
       <div class="stats">
         <div><b>3</b><span>Stars per board</span></div>
         <div><b>4</b><span>Cards in hand</span></div>
