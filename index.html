@@ -370,12 +370,12 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
     <div class="work">
 
       <a class="proj feature" href="#/botraid">
-        <div class="art"><img src="assets/br-feature.jpg" alt="BotRaid — Idle Strategy TD" loading="lazy"></div>
+        <div class="art"><img src="assets/br-feature.jpg" alt="BotRaid — Robot Puzzle Battles" loading="lazy"></div>
         <span class="status live">LIVE ON GOOGLE PLAY</span>
         <div class="body">
-          <h3>BotRaid: Idle Strategy TD</h3>
+          <h3>BotRaid: Robot Puzzle Battles</h3>
           <div class="kicker"><span>Solo — design, code, release</span><span>Unity 6 · URP</span><span>12 languages</span></div>
-          <p>An idle strategy TD where the map itself is the stake. Grid platforms dock edge to edge, every core builds robots forever, and whoever holds the ground holds the core.</p>
+          <p>A robot formation puzzler. An enemy formation stands opposite yours: you place robots from a hand of four cards, press FIGHT and watch. Clear the board for up to three stars.</p>
           <span class="more">CASE STUDY<span>&gt;</span></span>
         </div>
       </a>
@@ -507,9 +507,9 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
       <p class="eyebrow">CASE STUDY · SHIPPED</p>
       <div class="idrow">
         <img class="appicon" src="assets/br-store-icon.png" alt="BotRaid app icon">
-        <img class="wordmark" src="assets/botraid-wordmark.png" alt="BotRaid — Idle Strategy TD">
+        <img class="wordmark" src="assets/botraid-wordmark.png" alt="BotRaid — Robot Puzzle Battles">
       </div>
-      <p class="lede">Most idle games are a number that only goes up. This one is a map — and the whole map is up for grabs.</p>
+      <p class="lede">Place your robots. Press FIGHT. The ground is decided while you watch — and you can keep adding robots as it plays out.</p>
       <div class="cta">
         <a class="btn px" href="https://play.google.com/store/apps/details?id=com.chilltado.botconquest&hl=en" target="_blank" rel="noopener">GOOGLE PLAY</a>
         <button class="btn ghost px" type="button" data-scroll="trailer">TRAILER</button>
@@ -527,7 +527,7 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
   <section class="block" id="trailer">
     <div class="wrap">
       <h2>TRAILER</h2>
-      <p>28 seconds, captured in game.</p>
+      <p>21 seconds, captured in game.</p>
       <div class="trailer-row">
       <div class="player" data-player>
         <video controls preload="none" playsinline poster="assets/botraid-trailer-poster.jpg">
@@ -536,10 +536,10 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
         <button type="button" aria-label="Play the BotRaid trailer"><span>&#9654; WATCH</span></button>
       </div>
       <div class="stats">
-        <div><b>50</b><span>Buildable chassis</span></div>
-        <div><b>30</b><span>Levels per chassis</span></div>
-        <div><b>62</b><span>Unit behaviours</span></div>
-        <div><b>20</b><span>Career missions</span></div>
+        <div><b>3</b><span>Stars per board</span></div>
+        <div><b>4</b><span>Cards in hand</span></div>
+        <div><b>5</b><span>Part rarities</span></div>
+        <div><b>3</b><span>Tutorial boards</span></div>
         <div><b>12</b><span>Languages</span></div>
         <div><b>10K+</b><span>Play downloads</span></div>
       </div>
@@ -550,14 +550,14 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
   <section class="block">
     <div class="wrap">
       <h2>THE DESIGN PROBLEM</h2>
-      <p>Idle games rarely have stakes: progress only accumulates, so nothing that happens while you are away can matter. BotRaid puts the idle loop on contested ground instead. Platforms dock edge to edge, each with a core at its middle that builds robots forever. Whoever has an army standing on a platform owns its core — take the ground and the core comes with it, lose the ground and it goes with it. The war runs continuously, including while the app is closed.</p>
+      <p>The first BotRaid was an idle war on endlessly docking platforms. It kept the player waiting and gave them nothing to decide, so it was rebuilt as a puzzle: one board, one enemy formation, one question. The energy bar does not move until you press FIGHT, and after that it never stops, so the press is not the end of your turn. A board is won by occupation — stand on ground the enemy is not standing on and it changes hands.</p>
       <ul class="feats">
-        <li><span class="num">01</span><h3>NO BUILD PHASE</h3><p>No battle phase, no wave counter, no start button. One continuous war you are always in the middle of.</p></li>
-        <li><span class="num">02</span><h3>A PLATFORM EVERY 45s</h3><p>A hostile grid docks onto your territory on a clock — and you can call the next one in early when you want the fight now.</p></li>
-        <li><span class="num">03</span><h3>CORES CHANGE HANDS</h3><p>Hold enemy ground for 8 seconds and the core flips, along with everything it produces. Your home platform is the one thing that can never be taken.</p></li>
-        <li><span class="num">04</span><h3>PARTS BECOME ROBOTS</h3><p>Wrecked robots drop parts and parts become robots, so the army in front of you decides the army behind you.</p></li>
-        <li><span class="num">05</span><h3>BEHAVIOUR YOU SEE</h3><p>A mortar arcs over the line, a grappler drags a target off its tile, a mine trips on contact, a kamikaze runs in on a fuse. Nothing is a hidden multiplier.</p></li>
-        <li><span class="num">06</span><h3>COMMAND, NOT MICRO</h3><p>Robots pick their own targets. You decide what gets built, where it stands and where the line moves next — and you can pause the whole war to think.</p></li>
+        <li><span class="num">01</span><h3>A CAMPAIGN OF BOARDS</h3><p>Every board is its own question about one formation. Gold is the only thing carried between boards.</p></li>
+        <li><span class="num">02</span><h3>THREE STARS, THREE FAMILIES</h3><p>One star each for time, survival and restraint, so no single overwhelming force answers all three.</p></li>
+        <li><span class="num">03</span><h3>GROUND, NOT KILL COUNTS</h3><p>Ground is claimed grid by grid on both sides. Take an enemy grid outright and it changes sides; lose your last one and the board is over.</p></li>
+        <li><span class="num">04</span><h3>AN OPPONENT THAT PLAYS</h3><p>No waves. The enemy adds robots through the fight on its own energy, like a second player.</p></li>
+        <li><span class="num">05</span><h3>PARTS WITH RARITY</h3><p>Fit parts to a chassis, from Standard to Legendary. Duplicates level them, and what you fit is charged against your energy ceiling.</p></li>
+        <li><span class="num">06</span><h3>THE TUTORIAL IS CHAPTER ZERO</h3><p>Three boards that can only be won by doing the thing they teach, each with one line over it. Checked by simulation over 2000 seeds.</p></li>
       </ul>
     </div>
   </section>
@@ -566,11 +566,10 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
     <div class="wrap">
       <h2>IN GAME</h2>
       <div class="gal shots">
-        <figure><img src="assets/br-s1.jpg" alt="A hostile platform docking, with mission objectives running" loading="lazy"><figcaption>A platform docking in</figcaption></figure>
-        <figure><img src="assets/br-s2.jpg" alt="The board seen in full" loading="lazy"><figcaption>The board</figcaption></figure>
-        <figure><img src="assets/br-s3.jpg" alt="Grids docking edge to edge" loading="lazy"><figcaption>Grids dock edge to edge</figcaption></figure>
-        <figure><img src="assets/br-s4.jpg" alt="Held territory with houses and production" loading="lazy"><figcaption>Held ground</figcaption></figure>
-        <figure><img src="assets/br-s5.jpg" alt="Two armies meeting across the line" loading="lazy"><figcaption>The war</figcaption></figure>
+        <figure><img src="assets/br-n1.jpg" alt="The formation screen: a hand of four cards, energy and the FIGHT button" loading="lazy"><figcaption>Build your formation</figcaption></figure>
+        <figure><img src="assets/br-n2.jpg" alt="Robots fighting across the grids" loading="lazy"><figcaption>The battle</figcaption></figure>
+        <figure><img src="assets/br-n3.jpg" alt="The roster of robots" loading="lazy"><figcaption>Robots</figcaption></figure>
+        <figure><img src="assets/br-n4.jpg" alt="A part recovery ceremony" loading="lazy"><figcaption>Parts</figcaption></figure>
       </div>
     </div>
   </section>
@@ -601,7 +600,7 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
       <ul class="chips" style="margin-top:20px">
         <li>Unity 6 · URP</li><li>C#</li><li>UI Toolkit</li><li>Custom ECS-lite architecture</li>
         <li>Go backend</li><li>Cloud save</li><li>Play Games Services</li><li>Firebase Crashlytics</li>
-        <li>Remote Config</li><li>LevelPlay mediation</li><li>Daily/weekly liveops</li><li>12 localisations</li>
+        <li>Remote Config</li><li>LevelPlay mediation</li><li>Daily boards and challenges</li><li>12 localisations</li>
       </ul>
       <div class="notice">Fully offline-capable: no part of the gameplay depends on the network. Leaderboards and cloud save are optional and degrade silently when there is no connection.</div>
       <p class="muted" style="margin-top:22px">
