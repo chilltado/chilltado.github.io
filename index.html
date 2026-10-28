@@ -59,7 +59,7 @@ header{position:sticky;top:0;z-index:60;background:#0b0d13f2;border-bottom:2px s
 .nav{display:flex;align-items:center;gap:4px;height:66px;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 .nav a.tab{flex:none}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:auto;font-family:"Press Start 2P";font-size:12px;color:var(--ink)}
+.brand{display:flex;flex:none;align-items:center;gap:11px;text-decoration:none;margin-right:auto;padding-right:16px;font-family:"Press Start 2P";font-size:12px;color:var(--ink)}
 .brand img{width:30px;height:30px;flex:none;image-rendering:pixelated}
 .nav a.tab{
   text-decoration:none;color:var(--dim);font-size:11px;font-family:"Press Start 2P";
@@ -67,6 +67,8 @@ header{position:sticky;top:0;z-index:60;background:#0b0d13f2;border-bottom:2px s
 }
 .nav a.tab:hover{color:var(--ink);border-color:var(--line)}
 .nav a.tab[aria-current]{color:var(--bg);background:var(--teal);border-color:var(--teal)}
+.nav a.tab{padding:8px 6px;font-size:10px}
+@media(max-width:1400px){.brand span{display:none}}
 @media(max-width:720px){.brand span{display:none}.nav a.tab{padding:8px 7px;font-size:9.5px}}
 
 .view[hidden]{display:none}
