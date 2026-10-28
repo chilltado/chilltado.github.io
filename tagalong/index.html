@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#8EC9FF">
+  <title>Tag Along</title>
+  <link rel="icon" type="image/png" href="TemplateData/favicon.png">
+  <link rel="stylesheet" href="TemplateData/style.css">
+</head>
+<body>
+  <div id="stage">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading">
+      <img id="loading-icon" src="TemplateData/icon.png" alt="">
+      <div id="loading-title">Tag Along</div>
+      <div id="loading-track"><div id="loading-fill"></div></div>
+      <div id="loading-note">demo</div>
+    </div>
+    <div id="error" hidden></div>
+  </div>
+  <script>
+    var canvas = document.querySelector("#unity-canvas");
+    var loading = document.querySelector("#loading");
+    var fill = document.querySelector("#loading-fill");
+    var errorBox = document.querySelector("#error");
+
+    function showBanner(message, type) {
+      if (type === "error") {
+        errorBox.textContent = message;
+        errorBox.hidden = false;
+      }
+      console[type === "error" ? "error" : "warn"](message);
+    }
+
+    var buildUrl = "Build";
+    var config = {
+      dataUrl: buildUrl + "/tagalong-web-0.0.17.data.unityweb",
+      frameworkUrl: buildUrl + "/tagalong-web-0.0.17.framework.js.unityweb",
+      codeUrl: buildUrl + "/tagalong-web-0.0.17.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "chilltado",
+      productName: "Tag Along",
+      productVersion: "0.0.17",
+      showBanner: showBanner,
+      autoSyncPersistentDataPath: true,
+      // Above 2 the fill cost grows with no visible gain on a phone.
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+    };
+
+    var script = document.createElement("script");
+    script.src = buildUrl + "/tagalong-web-0.0.17.loader.js";
+    script.onload = function () {
+      createUnityInstance(canvas, config, function (progress) {
+        fill.style.width = Math.max(6, 100 * progress) + "%";
+      }).then(function () {
+        fill.style.width = "100%";
+        loading.classList.add("done");
+        setTimeout(function () { loading.remove(); }, 600);
+        canvas.focus();
+      }).catch(function (message) {
+        showBanner(String(message), "error");
+      });
+    };
+    document.body.appendChild(script);
+
+    // Keyboard arrows play the game; keep them from scrolling the itch.io page around the iframe.
+    window.addEventListener("keydown", function (event) {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].indexOf(event.key) >= 0) event.preventDefault();
+    }, { passive: false });
+    canvas.addEventListener("pointerdown", function () { canvas.focus(); });
+  </script>
+</body>
+</html>
