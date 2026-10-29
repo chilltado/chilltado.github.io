@@ -4,656 +4,571 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>chilltado — game developer</title>
-<meta name="description" content="Game developer. Gameplay systems, multiplayer, liveops and backend. BotRaid shipped on Google Play, Tag Along and Unwrap in pre-launch, Arms Unbound in production, plus two apps for the Moochies smartwatch.">
+<meta name="description" content="Indie game developer. Tag Along and Unwrap in pre-launch, Arms Unbound in production, BotRaid and Packet on Google Play, plus two apps for the Moochies smartwatch.">
 <link rel="canonical" href="https://chilltado.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="chilltado — game developer">
-<meta property="og:description" content="Gameplay systems, multiplayer, liveops and backend. BotRaid shipped on Google Play; Tag Along and Unwrap in pre-launch; Arms Unbound in production.">
+<meta property="og:description" content="Tag Along and Unwrap in pre-launch, Arms Unbound in production, BotRaid and Packet on Google Play.">
 <meta property="og:url" content="https://chilltado.github.io/">
-<meta property="og:image" content="https://chilltado.github.io/assets/br-feature.jpg">
+<meta property="og:image" content="https://chilltado.github.io/assets/tagalong-card.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0d13">
+<meta name="theme-color" content="#0c0e14">
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0d13; --bg2:#0f121a; --panel:#151a25; --panel2:#1b2130;
-  --line:#2b3446; --line2:#3d4a61;
-  --ink:#e9eef7; --dim:#93a1b8; --faint:#6a7688;
-  --red:#ef4b42; --teal:#3ad9d2; --gold:#f5c451;
-  --shadow:#04060a;
-  --max:1120px;
+  --bg:#0c0e14; --bg2:#10131b; --card:#151923; --card2:#1b2030;
+  --line:#242b3a; --line2:#36405a;
+  --ink:#f1f4fa; --dim:#a7b1c4; --faint:#717c90;
+  --teal:#3ad9d2; --red:#ef4b42; --gold:#f5c451; --green:#5ee88a; --magenta:#e45bd6;
+  --max:1200px; --r:18px;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --px:"Press Start 2P",monospace;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font:15px/1.75 "IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  overflow-x:hidden;
-  background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);
-  background-size:32px 32px;
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-h1,h2,h3,h4,.px-font{font-family:"Press Start 2P",monospace;font-weight:400;line-height:1.5;margin:0;letter-spacing:0}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1.08;margin:0}
+p{margin:0}
 a{color:inherit}
-img{max-width:100%;display:block}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
-button{font-family:inherit}
+img,video{max-width:100%;height:auto;display:block}
+button{font:inherit;color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+.pixel{image-rendering:pixelated}
 
-/* pixel frame ------------------------------------------------ */
-.px{
-  --n:6px;
-  clip-path:polygon(
-    0 var(--n), var(--n) var(--n), var(--n) 0,
-    calc(100% - var(--n)) 0, calc(100% - var(--n)) var(--n), 100% var(--n),
-    100% calc(100% - var(--n)), calc(100% - var(--n)) calc(100% - var(--n)), calc(100% - var(--n)) 100%,
-    var(--n) 100%, var(--n) calc(100% - var(--n)), 0 calc(100% - var(--n))
-  );
+/* header ----------------------------------------------------- */
+header{position:sticky;top:0;z-index:60;background:#0c0e14d9;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;flex:none;align-items:center;gap:10px;text-decoration:none;font-family:var(--px);font-size:11px}
+.brand img{width:30px;height:30px}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);padding-right:24px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;text-decoration:none;color:var(--dim);font-size:14px;font-weight:500;padding:7px 11px;border-radius:999px;transition:color .15s,background .15s}
+.tabs a:hover{color:var(--ink);background:#ffffff0d}
+.tabs a[aria-current]{color:#06201e;background:var(--teal)}
+@media(max-width:820px){.brand span{display:none}.nav{gap:10px}.tabs a{font-size:13.5px;padding:7px 10px}}
+
+/* primitives ------------------------------------------------- */
+.eyebrow{font-family:var(--px);font-size:10px;line-height:1.8;color:var(--teal);letter-spacing:.02em}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--px);font-size:9.5px;line-height:1;padding:8px 10px 7px;border-radius:4px;white-space:nowrap}
+.badge.pre{background:var(--gold);color:#2b1d00}
+.badge.prod{background:var(--magenta);color:#2a0326}
+.badge.live{background:var(--green);color:#03240f}
+.badge.live::before{content:"";width:7px;height:7px;background:currentColor;border-radius:1px}
+.badge.win{background:#2a2108;color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}
+.badge.ship{background:#0e2b2a;color:var(--teal);box-shadow:inset 0 0 0 2px #3ad9d266}
+.badge.year{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line2)}
+.badge.jam{background:#2a1416;color:#ff8a82;box-shadow:inset 0 0 0 2px #ef4b4266}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:12px;text-decoration:none;font-weight:600;font-size:15px;border:0;cursor:pointer;background:var(--teal);color:#05201e;transition:transform .15s,background .15s,box-shadow .15s;box-shadow:0 4px 0 #1f8f8a}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #1f8f8a}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #1f8f8a}
+.btn.ghost{background:#ffffff0a;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line2)}
+.btn.ghost:hover{background:#ffffff14;box-shadow:inset 0 0 0 1.5px var(--teal)}
+.btn .arr{transition:transform .15s}
+.btn:hover .arr{transform:translateX(3px)}
+.gplay{display:inline-flex;align-items:center;gap:11px;min-height:48px;padding:6px 18px 6px 14px;border-radius:12px;background:#000;color:#fff;text-decoration:none;box-shadow:inset 0 0 0 1.5px #ffffff40;transition:transform .15s,box-shadow .15s}
+.gplay:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px #fff}
+.gplay svg{width:22px;height:24px;flex:none}
+.gplay small{display:block;font-size:10px;letter-spacing:.06em;line-height:1.2;opacity:.85}
+.gplay b{display:block;font-family:var(--display);font-size:17px;line-height:1.15;font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.meta{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0;color:var(--dim);font-size:13.5px}
+.meta li{padding:4px 11px;border-radius:999px;background:#ffffff0a;border:1px solid var(--line)}
+
+.phone{position:relative;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#05070a;border:5px solid #07090d;box-shadow:0 24px 50px -12px #000c,0 0 0 1px #ffffff1a}
+.phone video,.phone img{width:100%;height:100%;object-fit:cover}
+
+/* section heads ---------------------------------------------- */
+.sec{padding:96px 0 0}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.sh h2{font-size:clamp(28px,4vw,44px);margin-top:12px}
+.sh .note{color:var(--faint);font-size:14px;max-width:44ch}
+@media(max-width:600px){.sec{padding-top:72px}.sh{margin-bottom:26px}}
+
+/* intro ------------------------------------------------------ */
+.intro{position:relative;padding:56px 0 0;overflow:hidden}
+.intro::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(40% 50% at 18% 40%,#3ad9d218,transparent 70%),radial-gradient(30% 45% at 85% 20%,#e45bd614,transparent 70%)}
+.intro .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px 56px;align-items:end}
+.intro h1{font-size:clamp(40px,5.2vw,68px);margin-top:16px}
+.intro h1 em{font-style:normal;color:var(--teal)}
+.intro .lede{color:var(--dim);font-size:18px;max-width:46ch}
+.intro .cta{margin-top:22px}
+.avail{display:inline-flex;align-items:center;gap:10px;font-family:var(--px);font-size:9px;color:var(--dim);margin-left:6px}
+.avail i{width:9px;height:9px;background:var(--green);animation:blink 1.6s steps(1,end) infinite}
+@keyframes blink{0%,60%{opacity:1}61%,100%{opacity:.3}}
+@media(max-width:900px){.intro .wrap{grid-template-columns:1fr}.intro{padding-top:40px}.intro .lede{font-size:17px}}
+.sh.compact{margin:56px 0 22px;align-items:center}
+.sh.compact .note{font-size:14px}
+
+/* spotlights (current games) --------------------------------- */
+.spots{display:grid;gap:30px}
+.spot{position:relative;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:center;padding:clamp(18px,2.4vw,30px);border-radius:28px;background:linear-gradient(135deg,color-mix(in srgb,var(--tint) 14%,var(--card)) 0%,var(--card) 60%);border:1px solid color-mix(in srgb,var(--tint) 22%,var(--line));overflow:hidden}
+.spot:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(0,1.7fr)}
+.spot:nth-child(even) .spot-media{order:2}
+.spot-media{position:relative;display:block;padding-right:18%;text-decoration:none}
+.spot-art{display:block;border-radius:16px;overflow:hidden;box-shadow:0 20px 40px -18px #000;background:#000}
+.spot-art img{width:100%;aspect-ratio:2.05/1;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.spot-media:hover .spot-art img{transform:scale(1.03)}
+.spot-media .phone{position:absolute;right:0;top:50%;width:22%;transform:translateY(-44%) rotate(2.5deg);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.spot-media:hover .phone{transform:translateY(-48%) rotate(0deg)}
+.spot-body h3{font-size:clamp(34px,4.4vw,54px);margin:18px 0 14px}
+.spot-body h3 img{height:clamp(56px,6vw,76px);width:auto}
+.spot-body p{color:var(--dim);font-size:17px;max-width:44ch}
+.spot-body .meta{margin:18px 0 26px}
+@media(max-width:900px){
+  .spot,.spot:nth-child(even){grid-template-columns:1fr;gap:22px;border-radius:22px}
+  .spot:nth-child(even) .spot-media{order:0}
+  .spot-media{padding-right:16%}
+  .spot-media .phone{width:25%;border-width:3px;border-radius:14px}
+  .spot-body{padding:0 4px 6px}
+  .spot-body h3{margin:14px 0 10px}
+  .spot-body p{font-size:16px}
 }
-.pixel-img{image-rendering:pixelated}
 
-/* chrome ----------------------------------------------------- */
-header{position:sticky;top:0;z-index:60;background:#0b0d13f2;border-bottom:2px solid var(--line)}
-.nav{display:flex;align-items:center;gap:4px;height:66px;overflow-x:auto;scrollbar-width:none}
-.nav::-webkit-scrollbar{display:none}
-.nav a.tab{flex:none}
-.brand{display:flex;flex:none;align-items:center;gap:11px;text-decoration:none;margin-right:auto;padding-right:16px;font-family:"Press Start 2P";font-size:12px;color:var(--ink)}
-.brand img{width:30px;height:30px;flex:none;image-rendering:pixelated}
-.nav a.tab{
-  text-decoration:none;color:var(--dim);font-size:11px;font-family:"Press Start 2P";
-  padding:9px 11px;border:2px solid transparent;transition:color .12s,border-color .12s,background .12s;
-}
-.nav a.tab:hover{color:var(--ink);border-color:var(--line)}
-.nav a.tab[aria-current]{color:var(--bg);background:var(--teal);border-color:var(--teal)}
-.nav a.tab{padding:8px 6px;font-size:10px}
-@media(max-width:1400px){.brand span{display:none}}
-@media(max-width:720px){.brand span{display:none}.nav a.tab{padding:8px 7px;font-size:9.5px}}
+/* shipped cards ---------------------------------------------- */
+.cards2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.card{display:flex;flex-direction:column;border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--line2);transform:translateY(-3px)}
+.card-art{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#05070a}
+.card-art>img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover .card-art>img{transform:scale(1.03)}
+.card-art .bot{position:absolute;right:2%;bottom:-6%;width:42%;height:auto;object-fit:contain;filter:drop-shadow(0 12px 18px #000a);transition:transform .4s}
+.card:hover .card-art .bot{transform:translateY(-6px)}
+.card-art .wm{position:absolute;left:5%;top:7%;width:38%;height:auto;filter:drop-shadow(0 4px 10px #000)}
+.card-body{display:flex;flex-direction:column;flex:1;padding:24px 26px 26px}
+.card-body h3{font-size:clamp(26px,3vw,34px);margin:16px 0 10px}
+.card-body p{color:var(--dim);font-size:16px}
+.card-body .meta{margin:14px 0 22px}
+.card-body .cta{margin-top:auto}
+@media(max-width:860px){.cards2{grid-template-columns:1fr}.card-body{padding:20px 18px 22px}}
 
-.view[hidden]{display:none}
-.fade{animation:fade .2s steps(4,end)}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-
-/* type ------------------------------------------------------- */
-.eyebrow{font-family:"Press Start 2P";font-size:10px;color:var(--teal);margin:0;line-height:1.8}
-.lede{color:var(--dim);font-size:15.5px;max-width:64ch;margin:0}
-.muted{color:var(--faint);font-size:13px}
-.btn{
-  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
-  background:var(--teal);color:#04231f;font-family:"Press Start 2P";font-size:11px;
-  padding:14px 18px;border:2px solid var(--teal);cursor:pointer;
-  box-shadow:4px 4px 0 var(--shadow);transition:transform .08s steps(2),box-shadow .08s steps(2);
-}
-.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--shadow)}
-.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--shadow)}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
-.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
-.btn.red{background:var(--red);border-color:var(--red);color:#1a0503}
-.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
-.chips li{font-size:12px;color:var(--dim);border:2px solid var(--line);padding:6px 10px;background:#ffffff06}
-
-.sec{padding:74px 0 0}
-.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:26px}
-.sec-head h2{font-size:15px;white-space:nowrap;color:var(--ink)}
-.sec-head .line{flex:1;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 4px,transparent 4px 8px)}
-.sec-head span{font-size:9.5px;color:var(--faint);font-family:"Press Start 2P";white-space:nowrap}
-
-/* hero ------------------------------------------------------- */
-.hero{position:relative;padding:96px 0 62px;overflow:hidden}
-.hero::before{
-  content:"";position:absolute;inset:-40% -20% auto -20%;height:760px;z-index:0;pointer-events:none;
-  background:radial-gradient(38% 44% at 22% 40%,#3ad9d21f,transparent 70%),
-             radial-gradient(34% 42% at 80% 14%,#ef4b421c,transparent 70%);
-}
-.hero .wrap{position:relative;z-index:1}
-.hero h1{font-size:clamp(19px,3.5vw,34px);margin:22px 0 24px;max-width:19ch;line-height:1.55}
-.hero h1 em{font-style:normal;color:var(--teal);text-shadow:3px 3px 0 #0c3b39}
-.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.hero .avail{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;color:var(--dim);margin-top:26px;font-family:"Press Start 2P";line-height:1.7}
-.hero .avail i{width:10px;height:10px;background:#61f08d;display:block;animation:blink 1.4s steps(1,end) infinite}
-@keyframes blink{0%,60%{opacity:1}61%,100%{opacity:.25}}
-
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
-@media(max-width:1080px){.hero-grid{grid-template-columns:1fr}.hero-art{display:none}}
-
-/* as tres unidades: tamanhos e alturas diferentes de proposito */
-.hero-art{position:relative;aspect-ratio:1/.92}
-.hero-art img{position:absolute;filter:drop-shadow(0 14px 0 #04060a55);animation:float 5.5s ease-in-out infinite}
-.hero-art .u-brawler{width:60%;left:20%;top:0;z-index:3}
-.hero-art .u-turret{width:44%;left:0;top:30%;z-index:2;animation-delay:.8s;animation-duration:6.5s}
-.hero-art .u-mortar{width:40%;left:58%;top:44%;z-index:1;transform:scaleX(-1);animation-delay:1.6s;animation-duration:7s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes floatx{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-10px)}}
-.hero-art .u-mortar{animation-name:floatx}
-.hero-tag{position:absolute;right:-4px;bottom:6%;font-family:"Press Start 2P";font-size:8px;color:var(--faint);writing-mode:vertical-rl;letter-spacing:.2em}
-
-/* chassis concepts ------------------------------------------- */
-.bots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:26px}
-.bots figure{background:radial-gradient(62% 58% at 50% 42%,#1e2534,#0f131b)}
-.bots img{width:100%;aspect-ratio:1;object-fit:contain;padding:16px}
-.bots figcaption{text-align:center;font-family:"Press Start 2P";font-size:9px;color:var(--dim);padding:11px 6px}
-
-/* marquee ---------------------------------------------------- */
-.marquee{margin-top:58px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee + .marquee{margin-top:12px}
-.track{display:flex;gap:12px;width:max-content;animation:slide 64s linear infinite}
-.marquee.rev .track{animation-direction:reverse}
-.marquee:hover .track{animation-play-state:paused}
-@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.track img{height:130px;width:auto;border:2px solid var(--line);object-fit:cover;opacity:.8;transition:opacity .15s,border-color .15s}
-.track img:hover{opacity:1;border-color:var(--teal)}
-@media(max-width:640px){.track img{height:94px}}
-
-/* work ------------------------------------------------------- */
-.work{display:grid;gap:18px;grid-template-columns:1fr 1fr}
-.proj{
-  position:relative;display:block;text-decoration:none;overflow:hidden;
-  border:2px solid var(--line);background:var(--panel);min-height:300px;
-  box-shadow:6px 6px 0 var(--shadow);
-  transition:transform .1s steps(2),box-shadow .1s steps(2),border-color .15s;
-}
-.proj:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--shadow);border-color:var(--line2)}
-.proj.feature{grid-column:1 / -1;min-height:400px}
-.proj .art{position:absolute;inset:0}
-.proj .art img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:opacity .2s}
-.proj:hover .art img{opacity:.72}
-.proj .art::after{content:"";position:absolute;inset:0;background:linear-gradient(185deg,#0b0d1333 0%,#0b0d13de 56%,#0b0d13 100%)}
-.proj .body{position:relative;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-height:inherit}
-.proj.feature .body{min-height:400px;padding:30px}
-.proj .status{
-  position:absolute;top:20px;left:24px;display:inline-flex;align-items:center;gap:8px;
-  font-family:"Press Start 2P";font-size:9px;padding:8px 11px;
-  background:#0b0d13e0;border:2px solid var(--line2);color:var(--dim);
-}
-.proj .status.live{color:#61f08d;border-color:#61f08d66}
-.proj .status.live::before{content:"";width:8px;height:8px;background:#61f08d;animation:blink 1.4s steps(1,end) infinite}
-.proj h3{font-size:clamp(13px,2vw,19px);margin-bottom:14px;line-height:1.5}
-.proj .kicker{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--faint);margin-bottom:12px}
-.proj p{margin:0;color:var(--dim);font-size:14px;max-width:56ch}
-.proj .more{margin-top:18px;font-size:10px;color:var(--teal);font-family:"Press Start 2P"}
-.proj:hover .more span{margin-left:10px}
-.proj .more span{margin-left:6px;transition:margin .12s steps(2)}
-@media(max-width:760px){.work{grid-template-columns:1fr}.proj,.proj.feature{min-height:280px}.proj.feature .body{min-height:280px;padding:22px}}
+/* earlier work ----------------------------------------------- */
+.minis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.mini{display:flex;flex-direction:column;text-decoration:none;border-radius:18px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:border-color .2s,transform .2s}
+.mini:hover{border-color:var(--line2);transform:translateY(-3px)}
+.mini-art{aspect-ratio:4/3;overflow:hidden;background:#05070a}
+.mini-art img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.mini:hover .mini-art img{transform:scale(1.04)}
+.mini-art.watch{display:flex;align-items:center;justify-content:center;gap:4%;background:radial-gradient(70% 80% at 50% 40%,#2c3a5c,#11151f)}
+.mini-art.watch img{width:36%;height:auto;border-radius:12px;border:4px solid #07090d;box-shadow:0 14px 24px -8px #000}
+.mini:hover .mini-art.watch img{transform:none}
+.mini-body{padding:16px 18px 18px}
+.mini-body h3{font-size:20px;margin:12px 0 6px}
+.mini-body p{color:var(--faint);font-size:14px;line-height:1.5}
+.mini.wide{grid-column:span 2;grid-row:span 2}
+.mini.wide .mini-art{aspect-ratio:auto;flex:1;min-height:240px}
+.mini.wide h3{font-size:26px}
+.mini.wide p{color:var(--dim);font-size:15px}
+@media(max-width:900px){.minis{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.mini.wide{grid-column:1/-1;grid-row:auto}}
+@media(max-width:520px){.mini-body{padding:12px 12px 14px}.mini-body h3{font-size:17px}.mini-body p{display:none}.mini.wide .mini-body p{display:block}.mini .badges{gap:6px}.mini .badge{font-size:8px;padding:6px 7px 5px}}
 
 /* credits ---------------------------------------------------- */
-.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-.cred{border:2px solid var(--line);background:var(--panel);box-shadow:6px 6px 0 var(--shadow);padding:20px;transition:border-color .15s}
-.cred:hover{border-color:var(--line2)}
-.cred .top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.cred .top img{width:56px;height:56px;border:2px solid var(--line2);flex:none}
-.cred h3{font-size:12px;line-height:1.5;margin-bottom:8px}
-.cred .dl{display:block;margin-top:9px;font-family:"Press Start 2P";font-size:9px;color:var(--gold)}
-.cred .top a{font-size:11px;color:var(--teal);text-decoration:none;border-bottom:2px solid #3ad9d240}
-.cred .top a:hover{border-color:var(--teal)}
-.credtext{margin:0 0 14px;color:var(--dim);font-size:13px;line-height:1.65}
-.cred .shots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.cred .shots img{width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--line);cursor:zoom-in}
-.cred .shots img:hover{border-color:var(--teal)}
+.creds{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.cred{border-radius:22px;background:var(--card);border:1px solid var(--line);padding:22px}
+.cred .top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.cred .top img{width:60px;height:60px;border-radius:14px;flex:none}
+.cred h3{font-size:24px;margin-bottom:6px}
+.cred .top a{font-size:14px;color:var(--teal);text-decoration:none;font-weight:500}
+.cred .top a:hover{text-decoration:underline}
+.cred p{color:var(--dim);font-size:15px;margin-bottom:16px}
+.cred .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cred .shots img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;cursor:zoom-in}
+@media(max-width:860px){.creds{grid-template-columns:1fr}}
 
 /* capabilities ----------------------------------------------- */
-.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.caps div{border:2px solid var(--line);background:var(--panel);padding:20px;box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s}
-.caps div:hover{border-color:var(--line2)}
-.caps h3{font-size:11px;margin-bottom:14px;color:var(--teal)}
-.caps p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.7}
+.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.caps div{border-radius:18px;background:var(--bg2);border:1px solid var(--line);padding:22px}
+.caps h3{font-family:var(--px);font-size:10px;font-weight:400;letter-spacing:0;color:var(--teal);margin-bottom:14px;line-height:1.6}
+.caps p{color:var(--dim);font-size:15px}
 
-/* band ------------------------------------------------------- */
-.band{margin-top:80px;border-top:2px solid var(--line);border-bottom:2px solid var(--line);background:var(--bg2);padding:64px 0}
-.band h2{font-size:clamp(14px,2.6vw,22px);max-width:22ch;margin-bottom:20px;line-height:1.6}
-.band p{color:var(--dim);max-width:56ch;margin:0 0 28px}
+.band{margin-top:96px;padding:72px 0;border-top:1px solid var(--line);background:radial-gradient(50% 120% at 15% 0%,#3ad9d214,transparent 70%),var(--bg2)}
+.band h2{font-size:clamp(30px,4.4vw,48px);max-width:18ch;margin-bottom:16px}
+.band p{color:var(--dim);max-width:54ch;margin-bottom:28px;font-size:17px}
 
-/* project hero ----------------------------------------------- */
-.phero{position:relative;padding:72px 0 44px;overflow:hidden;border-bottom:2px solid var(--line)}
-.phero .bg{position:absolute;inset:0;z-index:0}
-.phero .bg img{width:100%;height:100%;object-fit:cover;opacity:.3}
-.phero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0b0d13a8 0%,#0b0d13d8 55%,#0b0d13 96%)}
-.phero .wrap{position:relative;z-index:1}
-.phero .idrow{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:20px 0}
-.phero .appicon{width:78px;height:78px;border:2px solid var(--line2);box-shadow:5px 5px 0 var(--shadow)}
-.phero .wordmark{height:clamp(48px,7vw,72px);width:auto;object-fit:contain}
-.phero h1{font-size:clamp(18px,3.4vw,30px);margin:20px 0}
-.phero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:18px;margin-top:36px;border-top:2px solid var(--line);padding-top:22px}
-.facts div span{display:block;font-size:9px;color:var(--faint);margin-bottom:9px;font-family:"Press Start 2P";line-height:1.6}
-.facts div b{font-weight:500;font-size:13.5px;color:var(--ink)}
-
-.trailer-row{display:grid;grid-template-columns:400px 1fr;gap:26px;align-items:start;margin-top:26px}
-.trailer-row .player{margin-top:0}
-.trailer-row .stats{margin-top:0;align-self:stretch;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.trailer-row .stats div{display:flex;flex-direction:column;justify-content:center}
-@media(max-width:900px){.trailer-row{grid-template-columns:1fr}}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin-top:28px}
-.stats div{border:2px solid var(--line);background:var(--panel);padding:18px;box-shadow:5px 5px 0 var(--shadow)}
-.stats b{display:block;font-family:"Press Start 2P";font-size:22px;color:var(--gold);line-height:1.3}
-.stats span{display:block;margin-top:10px;font-size:12px;color:var(--dim)}
-
-.block{padding:64px 0 0}
-.block h2{font-size:clamp(13px,2.4vw,18px);margin-bottom:18px;line-height:1.5}
-.block > .wrap > p{color:var(--dim);max-width:70ch;margin-top:0}
-
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px;margin-top:26px;padding:0;list-style:none}
-.feats li{border:2px solid var(--line);padding:20px;background:var(--panel);box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s}
-.feats li:hover{border-color:var(--line2)}
-.feats h3{font-size:11px;margin-bottom:14px;line-height:1.6}
-.feats p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.7}
-.feats .num{font-family:"Press Start 2P";font-size:10px;color:var(--red);display:block;margin-bottom:12px}
-
-.itchstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;text-decoration:none;align-items:start}
-.itchstrip img{width:100%;border:2px solid var(--line);box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s,transform .1s steps(2)}
-.itchstrip:hover img{border-color:var(--teal);transform:translate(2px,2px)}
-.itchstrip span{grid-column:1/-1;font-family:"Press Start 2P";font-size:9.5px;color:var(--teal);margin-top:4px}
-
-.itchhead{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
-.itchhead img{width:200px;border:2px solid var(--line2);box-shadow:6px 6px 0 var(--shadow)}
-.itchhead > div{flex:1;min-width:260px}
-.itchhead p{color:var(--dim);margin:14px 0 18px;max-width:56ch}
-
-/* galleries -------------------------------------------------- */
-.gal{display:grid;gap:14px;margin-top:26px}
-.gal.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.gal.shots{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-figure{margin:0;border:2px solid var(--line);overflow:hidden;background:var(--panel);cursor:zoom-in;box-shadow:5px 5px 0 var(--shadow);transition:border-color .15s,transform .1s steps(2),box-shadow .1s steps(2)}
-figure:hover{border-color:var(--teal);transform:translate(2px,2px);box-shadow:3px 3px 0 var(--shadow)}
-.gal.g3 img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.gal.shots img{width:100%;aspect-ratio:9/16;object-fit:cover}
-figcaption{padding:10px 13px;font-size:12px;color:var(--faint);border-top:2px solid var(--line)}
-
-.devices{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px}
-.device{width:190px;border:2px solid var(--line2);background:#0f131b;padding:10px;box-shadow:6px 6px 0 var(--shadow)}
-.device img{width:100%;image-rendering:pixelated}
-.device p{margin:12px 2px 2px;font-size:9px;color:var(--faint);text-align:center;font-family:"Press Start 2P";line-height:1.6}
-
-.player{position:relative;margin-top:26px;border:2px solid var(--line);overflow:hidden;background:#05070a;box-shadow:6px 6px 0 var(--shadow)}
-.player iframe{width:100%;display:block;aspect-ratio:9/16;border:0;background:#05070a}
-.player video{width:100%;display:block;aspect-ratio:9/16;background:#05070a}
-.player button{position:absolute;inset:0;width:100%;border:0;cursor:pointer;background:center/cover no-repeat var(--poster,url(assets/botraid-trailer-poster.jpg));display:grid;place-items:center}
-.player button::before{content:"";position:absolute;inset:0;background:#0b0d1375}
-.player button span{
-  position:relative;display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#04231f;
-  font-family:"Press Start 2P";font-size:11px;padding:15px 20px;border:2px solid var(--teal);box-shadow:4px 4px 0 var(--shadow);
+/* project page hero ------------------------------------------ */
+.ph-banner{position:relative;max-height:min(62vh,600px);overflow:hidden;background:#05070a}
+.ph-banner img{width:100%;height:100%;max-height:min(62vh,600px);object-fit:cover;object-position:center 35%}
+.ph-banner.inset{margin-top:28px;border-radius:24px;aspect-ratio:16/7}
+.ph-banner.inset>img:first-child{height:100%;max-height:none}
+.ph-banner.inset .bot{position:absolute;right:4%;bottom:-4%;width:min(34%,400px);height:auto;z-index:1;filter:drop-shadow(0 16px 24px #000a)}
+.ph-banner.inset::after{display:none}
+.ph-banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(transparent,var(--bg))}
+.ph{position:relative;padding:44px 0 0}
+.ph-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;align-items:start}
+.ph-grid.wide-media{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}
+.ph-banner + .ph .ph-media{margin-top:-190px}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--faint);text-decoration:none;margin-bottom:18px}
+.back:hover{color:var(--teal)}
+.idrow{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:20px 0 16px}
+.idrow .appicon{width:76px;height:76px;border-radius:18px;box-shadow:0 10px 24px -8px #000}
+.idrow h1{font-size:clamp(40px,6vw,68px)}
+.idrow .wordmark{height:clamp(56px,8vw,84px);width:auto}
+.ph .lede{color:var(--dim);font-size:19px;max-width:50ch}
+.ph .cta{margin-top:28px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:18px;margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.facts span{display:block;font-family:var(--px);font-size:8.5px;color:var(--faint);margin-bottom:8px;line-height:1.6}
+.facts b{font-weight:500;font-size:15px}
+.ph-media .phone{max-width:300px;margin:0 auto}
+.ph-media .frame{border-radius:20px;overflow:hidden;box-shadow:0 24px 50px -16px #000;border:1px solid var(--line2)}
+.ph-media .frame img{width:100%}
+@media(max-width:900px){
+  .ph-grid,.ph-grid.wide-media{grid-template-columns:1fr;gap:36px}
+  .ph-banner + .ph .ph-media{margin-top:0}
+  .ph-banner.inset{aspect-ratio:16/9;border-radius:18px;margin-top:16px}
+  .ph-media .phone{max-width:240px}
+  .ph{padding-top:28px}
 }
 
-.yt{position:relative;border:2px solid var(--line);background:#05070a;aspect-ratio:16/9;overflow:hidden}
-.yt img{width:100%;height:100%;object-fit:cover;opacity:.8}
+.block{padding:84px 0 0}
+.block h2{font-size:clamp(26px,3.4vw,38px);margin-bottom:16px}
+.block .wrap>p{color:var(--dim);max-width:68ch;font-size:17px}
+@media(max-width:600px){.block{padding-top:64px}}
+
+.phone .sound{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);white-space:nowrap;border:0;border-radius:999px;padding:10px 16px;background:#000c;color:#fff;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 0 0 1px #ffffff40;transition:background .15s}
+.phone .sound:hover{background:var(--red)}
+.phone.playing .sound{display:none}
+.phone.playing video{object-fit:contain;background:#000}
+.ph-media .cap{text-align:center;color:var(--faint);font-size:13px;margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stats.s3{grid-template-columns:repeat(3,1fr)}
+.stats.s4{grid-template-columns:repeat(4,1fr)}
+.stats div{border-radius:16px;background:var(--card);border:1px solid var(--line);padding:20px}
+.stats b{display:block;font-family:var(--display);font-size:clamp(30px,4vw,44px);line-height:1;color:var(--gold)}
+.stats span{display:block;margin-top:10px;font-size:14px;color:var(--dim)}
+@media(max-width:760px){.stats.s3,.stats.s4{grid-template-columns:repeat(2,1fr)}}
+
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:28px 0 0;padding:0;list-style:none}
+.feats li{border-radius:18px;background:var(--card);border:1px solid var(--line);padding:22px}
+.feats .num{font-family:var(--px);font-size:9px;color:var(--red);display:block;margin-bottom:12px}
+.feats h3{font-size:19px;margin-bottom:8px;line-height:1.25}
+.feats p{color:var(--dim);font-size:15px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:22px 0 0;list-style:none}
+.chips li{font-size:14px;color:var(--dim);padding:6px 12px;border-radius:999px;background:#ffffff08;border:1px solid var(--line)}
+
+.gal{display:grid;gap:16px;margin-top:28px}
+.gal.tall{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.gal.wide{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.gal figure{margin:0;cursor:zoom-in}
+.gal img{width:100%;border-radius:16px;background:var(--card);transition:transform .3s,box-shadow .3s}
+.gal figure:hover img{transform:translateY(-4px);box-shadow:0 18px 30px -14px #000}
+.gal.tall img{aspect-ratio:9/16;object-fit:cover}
+.gal.wide img{aspect-ratio:16/9;object-fit:cover}
+.gal.wide.two{grid-template-columns:1fr 1fr;max-width:900px}
+.gal.env{grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);grid-template-rows:auto auto}
+.gal.env .core{grid-row:span 2;display:flex;flex-direction:column}
+.gal.env .core img{flex:1;min-height:0;height:100%;object-fit:cover}
+.gal.env img{aspect-ratio:auto}
+@media(max-width:700px){.gal.env{grid-template-columns:1fr}.gal.env .core{grid-row:auto}.gal.env .core img{aspect-ratio:787/1400;height:auto}}
+.gal figcaption{padding:10px 2px 0;font-size:14px;color:var(--faint)}
+@media(max-width:600px){
+  .gal.tall{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-16px;margin-right:-16px;padding:0 16px 6px;scrollbar-width:none}
+  .gal.tall::-webkit-scrollbar{display:none}
+  .gal.tall figure{flex:none;width:62%;scroll-snap-align:center}
+  .gal.wide{grid-template-columns:1fr}
+  .gal.wide.two{grid-template-columns:1fr 1fr;gap:10px}
+}
+
+.bots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:28px}
+.bots figure{margin:0;border-radius:16px;background:radial-gradient(62% 58% at 50% 42%,#222a3b,#11151e);border:1px solid var(--line);cursor:zoom-in}
+.bots img{width:100%;aspect-ratio:1;object-fit:contain;padding:14px}
+.bots figcaption{text-align:center;font-family:var(--px);font-size:8.5px;color:var(--dim);padding:0 6px 14px}
+@media(max-width:600px){.bots{grid-template-columns:repeat(3,1fr);gap:8px}.bots figcaption{font-size:7px}}
+
+.devices{display:flex;gap:16px;flex-wrap:wrap;margin-top:28px}
+.device{width:170px;border-radius:22px;background:#0b0e14;border:1px solid var(--line2);padding:10px;box-shadow:0 16px 30px -16px #000}
+.device img{width:100%;border-radius:12px}
+.device p{margin:10px 2px 2px;font-size:8px;color:var(--faint);text-align:center;font-family:var(--px);line-height:1.6}
+@media(max-width:600px){.devices{display:grid;grid-template-columns:1fr 1fr;gap:12px}.device{width:auto}}
+
+.yt{position:relative;border-radius:20px;overflow:hidden;background:#05070a;aspect-ratio:16/9;max-width:820px}
+.yt.v{aspect-ratio:9/16;max-width:320px;border-radius:22px;border:5px solid #07090d}
+.yt img{width:100%;height:100%;object-fit:cover}
 .yt iframe{width:100%;height:100%;border:0;display:block}
-.yt button{position:absolute;inset:0;width:100%;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
-.yt button span{background:var(--red);color:#1a0503;font-family:"Press Start 2P";font-size:10px;padding:12px 16px;border:2px solid var(--red);box-shadow:4px 4px 0 var(--shadow)}
-.yt:hover img{opacity:1}
+.yt button{position:absolute;inset:0;width:100%;border:0;background:linear-gradient(#0000,#0006);cursor:pointer;display:grid;place-items:center}
+.yt button span{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:var(--red);color:#fff;font-size:24px;box-shadow:0 10px 24px -6px #000;transition:transform .15s}
+.yt button:hover span{transform:scale(1.08)}
 
-.notice{margin-top:24px;border:2px solid var(--line);border-left:6px solid var(--teal);padding:16px 18px;background:#ffffff06;color:var(--dim);font-size:13.5px}
+.notice{margin-top:24px;border-radius:14px;border:1px solid var(--line);border-left:4px solid var(--teal);padding:16px 18px;background:#ffffff06;color:var(--dim);font-size:15px}
+.muted{color:var(--faint);font-size:14px}
+.muted a{color:var(--dim)}
 
-/* about ------------------------------------------------------ */
-.about{padding:84px 0 0}
-.about h1{font-size:clamp(16px,3vw,26px);margin-bottom:26px;max-width:22ch;line-height:1.6}
-.about p{color:var(--dim);max-width:66ch}
-.contact{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px}
+.jamrow{display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:center}
+.jamrow>img{width:100%;border-radius:18px;box-shadow:0 18px 34px -16px #000}
+.jamrow h2{margin:14px 0 10px}
+.jamrow p{color:var(--dim);margin-bottom:20px;max-width:54ch}
+@media(max-width:760px){.jamrow{grid-template-columns:1fr;gap:20px}.jamrow>img{max-width:320px}}
+
+.about{padding:72px 0 0}
+.about h1{font-size:clamp(36px,5.4vw,60px);margin:16px 0 26px;max-width:16ch}
+.about .wrap>p{color:var(--dim);max-width:64ch;font-size:17px;margin-bottom:16px}
 
 /* lightbox --------------------------------------------------- */
-#lb{position:fixed;inset:0;z-index:100;background:#04060af2;display:grid;place-items:center;padding:30px;cursor:zoom-out}
+#lb{position:fixed;inset:0;z-index:100;background:#05070af2;display:grid;place-items:center;padding:24px;cursor:zoom-out}
 #lb[hidden]{display:none}
-#lb img{max-width:min(1200px,94vw);max-height:88vh;width:auto;border:2px solid var(--line2);box-shadow:8px 8px 0 var(--shadow)}
-#lb .x{position:absolute;top:20px;right:24px;color:var(--dim);font-family:"Press Start 2P";font-size:14px;background:none;border:0;cursor:pointer}
+#lb img{max-width:min(1200px,94vw);max-height:88vh;width:auto;border-radius:12px}
+#lb .x{position:absolute;top:14px;right:16px;width:44px;height:44px;border-radius:50%;background:#ffffff14;border:0;font-size:20px;cursor:pointer}
 
-footer{border-top:2px solid var(--line);margin-top:86px;padding:30px 0 44px;color:var(--faint);font-size:12.5px}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--faint);font-size:14px}
 .footer-in{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
 footer a{color:var(--faint);text-decoration:none}
 footer a:hover{color:var(--teal)}
-footer img{height:60px;width:auto;image-rendering:pixelated}
+footer img{height:52px;width:auto}
+
+/* motion ----------------------------------------------------- */
+.view{padding-bottom:96px}
+#v-home{padding-bottom:0}
+.view[hidden]{display:none}
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+.view.enter{animation:enter .35s ease}
+@keyframes enter{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+  .spot-media .phone,.spot-media:hover .phone{transform:translateY(-44%)}
+}
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#/"><img src="assets/chilltado-mark.png" alt=""><span>chilltado</span></a>
-    <a class="tab" href="#/">Work</a>
-    <a class="tab" href="#/botraid">BotRaid</a>
-    <a class="tab" href="#/tagalong">Tag Along</a>
-    <a class="tab" href="#/unwrap">Unwrap</a>
-    <a class="tab" href="#/armsunbound">Arms Unbound</a>
-    <a class="tab" href="#/packet">Packet</a>
-    <a class="tab" href="#/smartwatch">Smartwatch</a>
-    <a class="tab" href="#/itch">Itch</a>
-    <a class="tab" href="#/about">About</a>
+    <a class="brand" href="#/"><img src="assets/chilltado-mark-96.webp" alt="" width="30" height="30"><span>chilltado</span></a>
+    <nav class="tabs" aria-label="Pages">
+      <a href="#/">Work</a>
+      <a href="#/tagalong">Tag Along</a>
+      <a href="#/unwrap">Unwrap</a>
+      <a href="#/armsunbound">Arms Unbound</a>
+      <a href="#/botraid">BotRaid</a>
+      <a href="#/packet">Packet</a>
+      <a href="#/smartwatch">Smartwatch</a>
+      <a href="#/itch">Jams</a>
+      <a href="#/about">About</a>
+    </nav>
   </div>
 </header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="gp" viewBox="0 0 22 24"><path d="M1 1.2 12.4 12 1 22.8c-.4-.2-.6-.6-.6-1.1V2.3c0-.5.2-.9.6-1.1Z" fill="#00d7fe"/><path d="m16.2 8.2-3.8 3.8L1 1.2c.2-.1.5-.2.8-.2.3 0 .5.1.8.2l13.6 7Z" fill="#00f076"/><path d="m16.2 15.8-13.6 7c-.3.1-.5.2-.8.2-.3 0-.6-.1-.8-.2L12.4 12l3.8 3.8Z" fill="#ff3a44"/><path d="M20.4 10.4c.7.4 1 1 1 1.6s-.3 1.2-1 1.6l-4.2 2.2-3.8-3.8 3.8-3.8 4.2 2.2Z" fill="#ffd400"/></symbol>
+</svg>
 
 <main>
 
 <!-- ================= HOME ================= -->
 <div class="view" id="v-home">
-  <div class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-      <p class="eyebrow">GAME DEVELOPER · GAMEPLAY · SYSTEMS · LIVEOPS</p>
-      <h1>I build games <em>end to end</em>.</h1>
-      <p class="lede">Gameplay systems, backend, tools and the release itself. Shipped on mobile, and open to any platform, genre or team where that work is useful.</p>
-      <div class="cta">
-        <a class="btn px" href="#/botraid">SEE THE WORK</a>
-        <a class="btn ghost px" href="mailto:chilltadolab@gmail.com">GET IN TOUCH</a>
+  <section class="intro">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">GAME DEVELOPER · GAMEPLAY · SYSTEMS · LIVEOPS</p>
+        <h1>I build games<br><em>end to end.</em></h1>
       </div>
-      <p class="avail"><i></i> OPEN TO OPPORTUNITIES</p>
-      </div>
-
-      <div class="hero-art">
-        <img class="u-brawler" src="assets/br-bot-brawler.png" alt="" loading="lazy">
-        <img class="u-turret" src="assets/br-bot-turret.png" alt="" loading="lazy">
-        <img class="u-mortar" src="assets/br-bot-mortar.png" alt="" loading="lazy">
-        <span class="hero-tag">BOTRAID · LIVE</span>
-      </div>
-    </div>
-
-    <div class="marquee">
-      <div class="track" data-loop>
-        <img src="assets/br-feature.jpg" alt="" loading="lazy">
-        <img src="assets/br-n1.jpg" alt="" loading="lazy">
-        <img src="assets/mo-4.jpg" alt="" loading="lazy">
-        <img src="assets/br-n3.jpg" alt="" loading="lazy">
-        <img src="assets/mo-5.jpg" alt="" loading="lazy">
-        <img src="assets/br-n2.jpg" alt="" loading="lazy">
-        <img src="assets/cr-packet-1.jpg" alt="" loading="lazy">
-        <img src="assets/mo-2.jpg" alt="" loading="lazy">
-        <img src="assets/tagalong-card.jpg" alt="" loading="lazy">
-        <img src="assets/uw-s2.jpg" alt="" loading="lazy">
-        <img src="assets/au-c3.jpg" alt="" loading="lazy">
-      </div>
-    </div>
-    <div class="marquee rev">
-      <div class="track" data-loop>
-        <img src="assets/br-n2.jpg" alt="" loading="lazy">
-        <img src="assets/au-env1.jpg" alt="" loading="lazy">
-        <img src="assets/br-n4.jpg" alt="" loading="lazy">
-        <img src="assets/mo-1.jpg" alt="" loading="lazy">
-        <img src="assets/br-n2.jpg" alt="" loading="lazy">
-        <img src="assets/sw-poster.jpg" alt="" loading="lazy">
-        <img src="assets/cr-packet-2.jpg" alt="" loading="lazy">
-        <img src="assets/mo-3.jpg" alt="" loading="lazy">
-        <img src="assets/unwrap-card.jpg" alt="" loading="lazy">
-        <img src="assets/armsunbound-concept.jpg" alt="" loading="lazy">
-        <img src="assets/ta-s2.jpg" alt="" loading="lazy">
-        <img src="assets/au-env2.jpg" alt="" loading="lazy">
-      </div>
-    </div>
-  </div>
-
-  <div class="sec"><div class="wrap">
-    <div class="sec-head"><h2>SELECTED WORK</h2><i class="line"></i><span>07</span></div>
-    <div class="work">
-
-      <a class="proj feature" href="#/botraid">
-        <div class="art"><img src="assets/br-feature.jpg" alt="BotRaid — Robot Puzzle Battles" loading="lazy"></div>
-        <span class="status live">LIVE ON GOOGLE PLAY</span>
-        <div class="body">
-          <h3>BotRaid: Robot Puzzle Battles</h3>
-          <div class="kicker"><span>Solo — design, code, release</span><span>Unity 6 · URP</span><span>12 languages</span></div>
-          <p>A robot formation puzzler. An enemy formation stands opposite yours: you place robots from a hand of four cards, press FIGHT and watch. Clear the board for up to three stars.</p>
-          <span class="more">CASE STUDY<span>&gt;</span></span>
+      <div>
+        <p class="lede">Design, gameplay systems, backend, tools and the release itself. Three games in the works right now, two on Google Play.</p>
+        <div class="cta">
+          <a class="btn ghost" href="mailto:chilltadolab@gmail.com">Get in touch</a>
+          <span class="avail"><i></i> OPEN TO OPPORTUNITIES</span>
         </div>
-      </a>
+      </div>
+    </div>
+  </section>
 
-      <a class="proj" href="#/tagalong">
-        <div class="art"><img src="assets/tagalong-card.jpg" alt="Tag Along — a duckling follows your steps" loading="lazy"></div>
-        <span class="status">PRE-LAUNCH</span>
-        <div class="body">
+  <section id="now"><div class="wrap">
+    <div class="sh compact"><p class="eyebrow">NOW IN DEVELOPMENT · 2026</p></div>
+    <div class="spots">
+
+      <article class="spot reveal" style="--tint:#7cc8ff">
+        <a class="spot-media" href="#/tagalong" aria-label="Tag Along">
+          <span class="spot-art"><img src="assets/tagalong-card-760.webp" srcset="assets/tagalong-card-760.webp 760w, assets/tagalong-card.webp 1200w" sizes="(min-width:900px) 620px, 80vw" width="1200" height="586" alt="Tag Along key art: a yellow and a purple duckling on star tiles"></span>
+          <span class="phone"><video data-auto muted loop playsinline preload="none" poster="assets/ta-loop-poster.webp" aria-label="Tag Along gameplay"><source src="assets/ta-loop.mp4" type="video/mp4"></video></span>
+        </a>
+        <div class="spot-body">
+          <div class="badges"><span class="badge pre">PRE-LAUNCH</span><span class="badge year">2026</span></div>
           <h3>Tag Along</h3>
-          <div class="kicker"><span>2026</span><span>Solo</span><span>Puzzle</span><span>Unity 6 · URP</span></div>
           <p>A duckling copies every step you take, one beat late. Two hundred levels where the puzzle is planning a path for both of you at once.</p>
-          <span class="more">SEE THE GAME<span>&gt;</span></span>
+          <ul class="meta"><li>Puzzle</li><li>200 levels</li><li>Solo</li><li>Unity 6</li></ul>
+          <div class="cta"><a class="btn" href="#/tagalong">See the game <span class="arr">→</span></a></div>
         </div>
-      </a>
+      </article>
 
-      <a class="proj" href="#/unwrap">
-        <div class="art"><img src="assets/unwrap-card.jpg" alt="Unwrap — solids unfold into paths" loading="lazy"></div>
-        <span class="status">PRE-LAUNCH</span>
-        <div class="body">
+      <article class="spot reveal" style="--tint:#e8d9b8">
+        <a class="spot-media" href="#/unwrap" aria-label="Unwrap">
+          <span class="spot-art"><img src="assets/unwrap-card-760.webp" srcset="assets/unwrap-card-760.webp 760w, assets/unwrap-card.webp 1200w" sizes="(min-width:900px) 620px, 80vw" width="1200" height="586" alt="Unwrap key art: a sketched solid unfolding on a notebook page" loading="lazy"></span>
+          <span class="phone"><video data-auto muted loop playsinline preload="none" poster="assets/uw-loop-poster.webp" aria-label="Unwrap gameplay"><source src="assets/uw-loop.mp4" type="video/mp4"></video></span>
+        </a>
+        <div class="spot-body">
+          <div class="badges"><span class="badge pre">PRE-LAUNCH</span><span class="badge year">2026</span></div>
           <h3>Unwrap</h3>
-          <div class="kicker"><span>2026</span><span>Solo</span><span>Puzzle</span><span>Unity 6 · URP</span></div>
           <p>Drop a 3D solid on a sketched page and it unfolds into a path. Every face that lands becomes floor, every face that hits a wall becomes a wall.</p>
-          <span class="more">SEE THE GAME<span>&gt;</span></span>
+          <ul class="meta"><li>Puzzle</li><li>200 levels</li><li>Solo</li><li>Unity 6</li></ul>
+          <div class="cta"><a class="btn" href="#/unwrap">See the game <span class="arr">→</span></a></div>
         </div>
-      </a>
+      </article>
 
-      <a class="proj" href="#/armsunbound">
-        <div class="art"><img src="assets/armsunbound-concept.jpg" alt="Arms Unbound concept art: an escaped android in a spirit-containment lab" loading="lazy"></div>
-        <span class="status">IN PRODUCTION</span>
-        <div class="body">
-          <h3>Arms Unbound</h3>
-          <div class="kicker"><span>2026</span><span>Solo</span><span>Tactical fantasy</span></div>
+      <article class="spot reveal" style="--tint:#e45bd6">
+        <a class="spot-media" href="#/armsunbound" aria-label="Arms Unbound">
+          <span class="spot-art"><img src="assets/au-env1-760.webp" srcset="assets/au-env1-760.webp 760w, assets/au-env1.webp 1200w" sizes="(min-width:900px) 620px, 80vw" width="1200" height="604" alt="Arms Unbound environment concept: a cloning lab" loading="lazy"></span>
+          <span class="phone"><img src="assets/au-gameplay-concept.webp" width="411" height="720" alt="Arms Unbound gameplay concept: a diving pistol shot" loading="lazy"></span>
+        </a>
+        <div class="spot-body">
+          <div class="badges"><span class="badge prod">IN PRODUCTION</span><span class="badge year">2026</span></div>
+          <h3><img src="assets/au-wordmark.webp" width="900" height="360" alt="Arms Unbound" loading="lazy"></h3>
           <p>An android who escaped being turned into a weapon breaks into the labs to free the spirits trapped inside the others.</p>
-          <span class="more">SEE THE GAME<span>&gt;</span></span>
+          <ul class="meta"><li>Turn-based tactics</li><li>Solo</li><li>Unity 6</li></ul>
+          <div class="cta"><a class="btn" href="#/armsunbound">See the game <span class="arr">→</span></a></div>
         </div>
-      </a>
-
-      <a class="proj" href="#/packet">
-        <div class="art"><img src="assets/cr-packet-1.jpg" alt="Packet delivery level" loading="lazy"></div>
-        <span class="status live">ON GOOGLE PLAY</span>
-        <div class="body">
-          <h3>Packet</h3>
-          <div class="kicker"><span>🏆 Hackathon winner</span><span>3D platformer maker</span><span>Android</span></div>
-          <p>A delivery platformer where the levels are the content: run the route, or build your own, clear it, and publish it for everyone else to run.</p>
-          <span class="more">CASE STUDY<span>&gt;</span></span>
-        </div>
-      </a>
-
-      <a class="proj" href="#/smartwatch">
-        <div class="art"><img src="assets/mo-4.jpg" alt="Virtual pet town map on a smartwatch screen" loading="lazy"></div>
-        <span class="status">SHIPPED</span>
-        <div class="body">
-          <h3>Tamagotchi</h3>
-          <div class="kicker"><span>Virtual pet</span><span>Moochies smartwatch</span></div>
-          <p>A pet-raising loop — feeding, washing, shopping, mini-games — designed to stay readable and tappable on a 184×224 watch screen.</p>
-          <span class="more">CASE STUDY<span>&gt;</span></span>
-        </div>
-      </a>
-
-      <a class="proj" href="#/smartwatch">
-        <div class="art"><img src="assets/sw-poster.jpg" alt="Astronomy game running on a smartwatch" loading="lazy"></div>
-        <span class="status">SHIPPED</span>
-        <div class="body">
-          <h3>SpaceQuizz</h3>
-          <div class="kicker"><span>Educational</span><span>Moochies smartwatch</span></div>
-          <p>Quiz rounds, ordering the planets, naming moons and tracing constellations — a science game for the same watch.</p>
-          <span class="more">CASE STUDY<span>&gt;</span></span>
-        </div>
-      </a>
+      </article>
 
     </div>
-  </div></div>
+  </div></section>
 
-  <div class="sec"><div class="wrap">
-    <div class="sec-head"><h2>ALSO WORKED ON</h2><i class="line"></i><span>02</span></div>
+  <section class="sec"><div class="wrap">
+    <div class="sh"><div><p class="eyebrow">SHIPPED</p><h2>On Google Play</h2></div></div>
+    <div class="cards2">
+
+      <article class="card reveal">
+        <a class="card-art" href="#/botraid" aria-label="BotRaid case study">
+          <img src="assets/br-feature.webp" width="1024" height="576" alt="BotRaid: robots fighting across an isometric board" loading="lazy">
+          <img class="bot" src="assets/br-bot-brawler-480.webp" width="460" height="412" alt="" loading="lazy">
+        </a>
+        <div class="card-body">
+          <div class="badges"><span class="badge live">ON GOOGLE PLAY</span><span class="badge year">2026</span></div>
+          <h3>BotRaid: Robot Puzzle Battles</h3>
+          <p>A robot formation puzzler. Place robots from a hand of four cards, press FIGHT and watch the ground change hands. Clear the board for up to three stars.</p>
+          <ul class="meta"><li>Solo</li><li>Unity 6</li><li>12 languages</li><li>10K+ downloads</li></ul>
+          <div class="cta">
+            <a class="gplay" href="https://play.google.com/store/apps/details?id=com.chilltado.botconquest&amp;hl=en" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#gp"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
+            <a class="btn ghost" href="#/botraid">Case study <span class="arr">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <a class="card-art" href="#/packet" aria-label="Packet case study">
+          <img src="assets/cr-packet-1.webp" width="640" height="360" alt="Packet: making a delivery through a level" loading="lazy">
+        </a>
+        <div class="card-body">
+          <div class="badges"><span class="badge live">ON GOOGLE PLAY</span><span class="badge win">🏆 HACKATHON WINNER</span></div>
+          <h3>Packet</h3>
+          <p>A delivery platformer where the levels are the content: run the route, or build your own, clear it, and publish it for everyone else to run.</p>
+          <ul class="meta"><li>Hackathon team</li><li>3D platformer maker</li><li>Go backend</li></ul>
+          <div class="cta">
+            <a class="gplay" href="https://play.google.com/store/apps/details?id=com.hackathon38.group38.packet" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#gp"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
+            <a class="btn ghost" href="#/packet">Case study <span class="arr">→</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div></section>
+
+  <section class="sec"><div class="wrap">
+    <div class="sh"><div><p class="eyebrow">EARLIER</p><h2>Smartwatch apps &amp; game jams</h2></div><a class="btn ghost" href="https://chilltado.itch.io/" target="_blank" rel="noopener">chilltado.itch.io <span class="arr">→</span></a></div>
+    <div class="minis">
+      <a class="mini wide reveal" href="#/smartwatch">
+        <div class="mini-art watch"><img class="pixel" src="assets/mo-4.webp" width="368" height="448" alt="Tamagotchi town map on the watch" loading="lazy"><img class="pixel" src="assets/sw-poster.webp" width="368" height="448" alt="SpaceQuizz on the watch" loading="lazy"></div>
+        <div class="mini-body">
+          <div class="badges"><span class="badge ship">SHIPPED</span><span class="badge year">2021–2022</span></div>
+          <h3>Tamagotchi &amp; SpaceQuizz</h3>
+          <p>A virtual pet and a science game for the Moochies kids' smartwatch, built for a 184×224 screen.</p>
+        </div>
+      </a>
+      <a class="mini reveal" href="#/itch">
+        <div class="mini-art"><img src="assets/itch-dangerroom-cover.webp" width="630" height="500" alt="DangerRoom" loading="lazy"></div>
+        <div class="mini-body"><div class="badges"><span class="badge jam">GAME JAM</span><span class="badge year">2023</span></div><h3>DangerRoom</h3><p>Build, power up and survive each wave in small rooms.</p></div>
+      </a>
+      <a class="mini reveal" href="#/itch">
+        <div class="mini-art"><img src="assets/itch-resourcefight-cover.webp" width="480" height="320" alt="Resourcefight" loading="lazy"></div>
+        <div class="mini-body"><div class="badges"><span class="badge jam">GAME JAM</span><span class="badge year">2020</span></div><h3>Resourcefight</h3><p>Missions broadcast to the whole city.</p></div>
+      </a>
+      <a class="mini reveal" href="#/itch">
+        <div class="mini-art"><img src="assets/itch-emancipsychic-cover.webp" width="320" height="270" alt="Emancipsychic" loading="lazy"></div>
+        <div class="mini-body"><div class="badges"><span class="badge jam">GAME JAM</span><span class="badge year">2020</span></div><h3>Emancipsychic</h3><p>Cross the city dodging enemies to free the psychics.</p></div>
+      </a>
+      <a class="mini reveal" href="#/itch">
+        <div class="mini-art"><img src="assets/itch-hit-n-brawl-cover.webp" width="218" height="224" alt="Hit 'n' Brawl" loading="lazy"></div>
+        <div class="mini-body"><div class="badges"><span class="badge jam">GAME JAM</span><span class="badge year">2020</span></div><h3>Hit 'n' Brawl</h3><p>A brawler crossed with a shooter and a card game.</p></div>
+      </a>
+    </div>
+  </div></section>
+
+  <section class="sec"><div class="wrap">
+    <div class="sh"><div><p class="eyebrow">ALSO WORKED ON · WILDLIFE STUDIOS · SINCE 2022</p><h2>Live games at scale</h2></div></div>
     <div class="creds">
-
-      <div class="cred">
+      <div class="cred reveal">
         <div class="top">
-          <img src="assets/cr-zooba-icon.png" alt="Zooba icon">
+          <img src="assets/cr-zooba-icon.webp" width="60" height="60" alt="Zooba icon" loading="lazy">
           <div>
             <h3>Zooba</h3>
-            <a href="https://play.google.com/store/apps/details?id=com.wildlife.games.battle.royale.free.zooba" target="_blank" rel="noopener">Google Play &gt;</a>
-            <span class="dl">100M+ DOWNLOADS</span>
+            <div class="badges" style="margin:8px 0"><span class="badge win">100M+ DOWNLOADS</span></div>
+            <a href="https://play.google.com/store/apps/details?id=com.wildlife.games.battle.royale.free.zooba" target="_blank" rel="noopener">Google Play →</a>
           </div>
         </div>
-        <p class="credtext">Multiplayer work: characters, maps, items and game modes.</p>
+        <p>Multiplayer work: characters, maps, items and game modes.</p>
         <div class="shots">
-          <img src="assets/cr-zooba-1.jpg" alt="Zooba gameplay" loading="lazy">
-          <img src="assets/cr-zooba-2.jpg" alt="Zooba gameplay" loading="lazy">
-          <img src="assets/cr-zooba-3.jpg" alt="Zooba gameplay" loading="lazy">
+          <img src="assets/cr-zooba-1.webp" alt="Zooba gameplay" loading="lazy">
+          <img src="assets/cr-zooba-2.webp" alt="Zooba gameplay" loading="lazy">
+          <img src="assets/cr-zooba-3.webp" alt="Zooba gameplay" loading="lazy">
         </div>
       </div>
-
-      <div class="cred">
+      <div class="cred reveal">
         <div class="top">
-          <img src="assets/cr-warmachines-icon.png" alt="War Machines icon">
+          <img src="assets/cr-warmachines-icon.webp" width="60" height="60" alt="War Machines icon" loading="lazy">
           <div>
             <h3>War Machines</h3>
-            <a href="https://play.google.com/store/apps/details?id=com.fungames.battletanksbeta" target="_blank" rel="noopener">Google Play &gt;</a>
-            <span class="dl">100M+ DOWNLOADS</span>
+            <div class="badges" style="margin:8px 0"><span class="badge win">100M+ DOWNLOADS</span></div>
+            <a href="https://play.google.com/store/apps/details?id=com.fungames.battletanksbeta" target="_blank" rel="noopener">Google Play →</a>
           </div>
         </div>
-        <p class="credtext">Live events, store offers, competitive incentives and UI.</p>
+        <p>Live events, store offers, competitive incentives and UI.</p>
         <div class="shots">
-          <img src="assets/cr-warmachines-1.jpg" alt="War Machines gameplay" loading="lazy">
-          <img src="assets/cr-warmachines-2.jpg" alt="War Machines gameplay" loading="lazy">
-          <img src="assets/cr-warmachines-3.jpg" alt="War Machines gameplay" loading="lazy">
+          <img src="assets/cr-warmachines-1.webp" alt="War Machines gameplay" loading="lazy">
+          <img src="assets/cr-warmachines-2.webp" alt="War Machines gameplay" loading="lazy">
+          <img src="assets/cr-warmachines-3.webp" alt="War Machines gameplay" loading="lazy">
         </div>
       </div>
-
     </div>
-  </div></div>
+  </div></section>
 
-  <div class="sec"><div class="wrap">
-    <div class="sec-head"><h2>JAMS &amp; PROTOTYPES</h2><i class="line"></i><span>ITCH.IO</span></div>
-    <a class="itchstrip" href="#/itch">
-      <img src="assets/itch-dangerroom-cover.jpg" alt="DangerRoom" loading="lazy">
-      <img src="assets/itch-resourcefight-cover.jpg" alt="Resourcefight" loading="lazy">
-      <img src="assets/itch-hit-n-brawl-cover.jpg" alt="Hit 'n' Brawl" loading="lazy">
-      <img src="assets/itch-emancipsychic-cover.jpg" alt="Emancipsychic" loading="lazy">
-      <span>4 SMALL GAMES, MOST PLAYABLE IN THE BROWSER &gt;</span>
-    </a>
-  </div></div>
-
-  <div class="sec"><div class="wrap">
-    <div class="sec-head"><h2>WHAT I DO</h2><i class="line"></i><span>CAPABILITIES</span></div>
+  <section class="sec"><div class="wrap">
+    <div class="sh"><div><p class="eyebrow">CAPABILITIES</p><h2>What I do</h2></div></div>
     <div class="caps">
       <div><h3>GAMEPLAY</h3><p>Combat, movement and physics, controls for touch and gamepad, camera, AI and targeting, economy, progression, levels and editors, VFX and game feel — from the first prototype to the tuning pass that makes it play well.</p></div>
-      <div><h3>MULTIPLAYER</h3><p>Real-time networking with Mirror — the networking layer itself, state replication, client prediction and the server side of a match — plus async competition when live netcode is not worth its cost: leaderboards, brackets and replays as opponents.</p></div>
+      <div><h3>MULTIPLAYER</h3><p>Real-time networking with Mirror — state replication, client prediction and the server side of a match — plus async competition when live netcode is not worth its cost: leaderboards, brackets and replays as opponents.</p></div>
       <div><h3>LIVEOPS</h3><p>Daily and weekly mission tracks, seasonal standings, remote config, A/B-able tuning and store offers — content that can be changed without a client release.</p></div>
       <div><h3>BACKEND + SHIPPING</h3><p>Go services for leaderboards, identity and cloud save, plus the release itself: store listings, ratings forms, crash reporting and ad mediation.</p></div>
-      </div>
-  </div></div>
+    </div>
+  </div></section>
 
   <div class="band"><div class="wrap">
     <h2>Looking for someone to build the hard part?</h2>
     <p>Full-time, contract or collaboration — gameplay, systems, tools or the whole game.</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn px" href="mailto:chilltadolab@gmail.com">EMAIL ME</a>
-      <a class="btn ghost px" href="https://github.com/chilltado" target="_blank" rel="noopener">GITHUB</a>
+    <div class="cta">
+      <a class="btn" href="mailto:chilltadolab@gmail.com">Email me</a>
+      <a class="btn ghost" href="https://github.com/chilltado" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div></div>
 </div>
 
-<!-- ================= BOTRAID ================= -->
-<div class="view" id="v-botraid" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/br-n2.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">CASE STUDY · SHIPPED</p>
-      <div class="idrow">
-        <img class="appicon" src="assets/br-store-icon.png" alt="BotRaid app icon">
-        <img class="wordmark" src="assets/botraid-wordmark.png" alt="BotRaid — Robot Puzzle Battles">
-      </div>
-      <p class="lede">Place your robots. Press FIGHT. The ground is decided while you watch — and you can keep adding robots as it plays out.</p>
-      <div class="cta">
-        <a class="btn px" href="https://play.google.com/store/apps/details?id=com.chilltado.botconquest&hl=en" target="_blank" rel="noopener">GOOGLE PLAY</a>
-        <button class="btn ghost px" type="button" data-scroll="trailer">TRAILER</button>
-      </div>
-      <div class="facts">
-        <div><span>ROLE</span><b>Solo developer</b></div>
-        <div><span>SCOPE</span><b>Design, code, release</b></div>
-        <div><span>ENGINE</span><b>Unity 6 · URP</b></div>
-        <div><span>PLATFORM</span><b>Android</b></div>
-        <div><span>BACKEND</span><b>Go</b></div>
-      </div>
-    </div>
-  </div>
-
-  <section class="block" id="trailer">
-    <div class="wrap">
-      <h2>TRAILER</h2>
-      <p>Captured in game.</p>
-      <div class="trailer-row">
-      <div class="player"><iframe src="https://www.youtube-nocookie.com/embed/rutav7YaCOA" title="BotRaid trailer" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
-      <div class="stats">
-        <div><b>3</b><span>Stars per board</span></div>
-        <div><b>4</b><span>Cards in hand</span></div>
-        <div><b>5</b><span>Part rarities</span></div>
-        <div><b>3</b><span>Tutorial boards</span></div>
-        <div><b>12</b><span>Languages</span></div>
-        <div><b>10K+</b><span>Play downloads</span></div>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="wrap">
-      <h2>THE DESIGN PROBLEM</h2>
-      <p>The first BotRaid was an idle war on endlessly docking platforms. It kept the player waiting and gave them nothing to decide, so it was rebuilt as a puzzle: one board, one enemy formation, one question. The energy bar does not move until you press FIGHT, and after that it never stops, so the press is not the end of your turn. A board is won by occupation — stand on ground the enemy is not standing on and it changes hands.</p>
-      <ul class="feats">
-        <li><span class="num">01</span><h3>A CAMPAIGN OF BOARDS</h3><p>Every board is its own question about one formation. Gold is the only thing carried between boards.</p></li>
-        <li><span class="num">02</span><h3>THREE STARS, THREE FAMILIES</h3><p>One star each for time, survival and restraint, so no single overwhelming force answers all three.</p></li>
-        <li><span class="num">03</span><h3>GROUND, NOT KILL COUNTS</h3><p>Ground is claimed grid by grid on both sides. Take an enemy grid outright and it changes sides; lose your last one and the board is over.</p></li>
-        <li><span class="num">04</span><h3>AN OPPONENT THAT PLAYS</h3><p>No waves. The enemy adds robots through the fight on its own energy, like a second player.</p></li>
-        <li><span class="num">05</span><h3>PARTS WITH RARITY</h3><p>Fit parts to a chassis, from Standard to Legendary. Duplicates level them, and what you fit is charged against your energy ceiling.</p></li>
-        <li><span class="num">06</span><h3>THE TUTORIAL IS CHAPTER ZERO</h3><p>Three boards that can only be won by doing the thing they teach, each with one line over it. Checked by simulation over 2000 seeds.</p></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="wrap">
-      <h2>IN GAME</h2>
-      <div class="gal shots">
-        <figure><img src="assets/br-n1.jpg" alt="The formation screen: a hand of four cards, energy and the FIGHT button" loading="lazy"><figcaption>Build your formation</figcaption></figure>
-        <figure><img src="assets/br-n2.jpg" alt="Robots fighting across the grids" loading="lazy"><figcaption>The battle</figcaption></figure>
-        <figure><img src="assets/br-n3.jpg" alt="The roster of robots" loading="lazy"><figcaption>Robots</figcaption></figure>
-        <figure><img src="assets/br-n4.jpg" alt="A part recovery ceremony" loading="lazy"><figcaption>Parts</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="wrap">
-      <h2>CHASSIS CONCEPTS</h2>
-      <p>Each chassis is a silhouette first — a player has to read what a robot does from across the board, before any tooltip.</p>
-      <div class="bots">
-        <figure><img src="assets/br-bot-brawler.png" alt="Brawler concept art" loading="lazy"><figcaption>BRAWLER</figcaption></figure>
-        <figure><img src="assets/br-bot-grappler.png" alt="Grappler concept art" loading="lazy"><figcaption>GRAPPLER</figcaption></figure>
-        <figure><img src="assets/br-bot-missiler.png" alt="Missiler concept art" loading="lazy"><figcaption>MISSILER</figcaption></figure>
-        <figure><img src="assets/br-bot-healer.png" alt="Healer concept art" loading="lazy"><figcaption>HEALER</figcaption></figure>
-        <figure><img src="assets/br-bot-shielder.png" alt="Shielder concept art" loading="lazy"><figcaption>SHIELDER</figcaption></figure>
-        <figure><img src="assets/br-bot-railgun.png" alt="Railgun concept art" loading="lazy"><figcaption>RAILGUN</figcaption></figure>
-        <figure><img src="assets/br-bot-landmine.png" alt="Landmine concept art" loading="lazy"><figcaption>LANDMINE</figcaption></figure>
-        <figure><img src="assets/br-bot-overlord.png" alt="Overlord concept art" loading="lazy"><figcaption>OVERLORD</figcaption></figure>
-        <figure><img src="assets/br-bot-turret.png" alt="Turret concept art" loading="lazy"><figcaption>TURRET</figcaption></figure>
-        <figure><img src="assets/br-bot-mortar.png" alt="Mortar concept art" loading="lazy"><figcaption>MORTAR</figcaption></figure>
-        <figure><img src="assets/br-bot-sentinel.png" alt="Sentinel concept art" loading="lazy"><figcaption>SENTINEL</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="wrap">
-      <h2>BUILT WITH</h2>
-      <ul class="chips" style="margin-top:20px">
-        <li>Unity 6 · URP</li><li>C#</li><li>UI Toolkit</li><li>Custom ECS-lite architecture</li>
-        <li>Go backend</li><li>Cloud save</li><li>Play Games Services</li><li>Firebase Crashlytics</li>
-        <li>Remote Config</li><li>LevelPlay mediation</li><li>Daily boards and challenges</li><li>12 localisations</li>
-      </ul>
-      <div class="notice">Fully offline-capable: no part of the gameplay depends on the network. Leaderboards and cloud save are optional and degrade silently when there is no connection.</div>
-      <p class="muted" style="margin-top:22px">
-        <a href="https://chilltado.github.io/botraid-legal/privacy-policy">Privacy policy</a> ·
-        <a href="https://chilltado.github.io/botraid-legal/terms-of-service">Terms of service</a>
-      </p>
-    </div>
-  </section>
-</div>
-
 <!-- ================= TAG ALONG ================= -->
 <div class="view" id="v-tagalong" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/ta-s2.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">PRE-LAUNCH · PUZZLE</p>
-      <div class="idrow">
-        <img class="appicon" src="assets/ta-icon.png" alt="Tag Along app icon">
-        <h1>Tag Along</h1>
-      </div>
+  <div class="ph-banner"><img src="assets/tagalong-card.webp" width="1200" height="586" alt="Tag Along key art" loading="lazy"></div>
+  <section class="ph"><div class="wrap ph-grid">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge pre">PRE-LAUNCH</span><span class="badge year">2026</span></div>
+      <div class="idrow"><img class="appicon" src="assets/ta-icon.webp" width="76" height="76" alt="Tag Along app icon" loading="lazy"><h1>Tag Along</h1></div>
       <p class="lede">A duckling copies every step you take, one beat late. Get both of you home.</p>
       <div class="cta">
-        <a class="btn px" href="tagalong/">PLAY THE DEMO</a>
-        <button class="btn ghost px" type="button" data-scroll="ta-trailer">TRAILER</button>
+        <a class="btn" href="tagalong/">Play the demo <span class="arr">→</span></a>
+        <button class="btn ghost" type="button" data-trailer="ta-trailer">▶ Trailer</button>
       </div>
       <div class="facts">
         <div><span>YEAR</span><b>2026</b></div>
@@ -663,59 +578,45 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
         <div><span>PLATFORM</span><b>Android · Web demo</b></div>
       </div>
     </div>
-  </div>
+    <div class="ph-media" id="ta-trailer"><div class="phone"><video data-auto data-full="assets/ta-trailer.mp4" muted loop playsinline preload="none" poster="assets/ta-loop-poster.webp" aria-label="Tag Along gameplay"><source src="assets/ta-loop.mp4" type="video/mp4"></video><button class="sound" type="button" data-trailer="ta-trailer">▶ Trailer with sound</button></div><p class="cap">Captured in game</p></div>
+  </div></section>
 
-  <section class="block" id="ta-trailer">
-    <div class="wrap">
-      <h2>TRAILER</h2>
-      <p>Captured in game.</p>
-      <div class="trailer-row">
-      <div class="player"><video src="assets/ta-trailer.mp4" poster="assets/ta-trailer-poster.jpg" controls playsinline preload="none"></video></div>
-      <div class="stats" style="align-self:start;grid-template-columns:repeat(2,1fr)">
+  <section class="block"><div class="wrap">
+    <div class="stats s4">
         <div><b>200</b><span>Levels</span></div>
         <div><b>20</b><span>Worlds</span></div>
         <div><b>1</b><span>Beat of delay</span></div>
         <div><b>3</b><span>Stars per level</span></div>
-      </div>
-      </div>
     </div>
-  </section>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>THE IDEA</h2>
-      <p>Every move you make, the duckling makes on the next turn. The puzzle is never just your own path: it is a path that still works when it is replayed one step behind you, through gates, pads and water that changed in between.</p>
-    </div>
-  </section>
+  <section class="block"><div class="wrap">
+    <h2>The idea</h2>
+    <p>Every move you make, the duckling makes on the next turn. The puzzle is never just your own path: it is a path that still works when it is replayed one step behind you, through gates, pads and water that changed in between.</p>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>IN GAME</h2>
-      <div class="gal shots">
-        <figure><img src="assets/ta-s1.jpg" alt="The duckling following footprints" loading="lazy"><figcaption>Footprints</figcaption></figure>
-        <figure><img src="assets/ta-s2.jpg" alt="Both ducks reaching home" loading="lazy"><figcaption>Both home</figcaption></figure>
-        <figure><img src="assets/ta-s3.jpg" alt="Level clear with three stars" loading="lazy"><figcaption>Level clear</figcaption></figure>
-        <figure><img src="assets/ta-s4.jpg" alt="Level 1-2" loading="lazy"><figcaption>World 1</figcaption></figure>
-        <figure><img src="assets/ta-s5.jpg" alt="Main menu" loading="lazy"><figcaption>Menu</figcaption></figure>
-      </div>
+  <section class="block"><div class="wrap">
+    <h2>In game</h2>
+    <div class="gal tall">
+      <figure><img src="assets/ta-s1.webp" alt="The duckling following footprints" loading="lazy"><figcaption>Footprints</figcaption></figure>
+      <figure><img src="assets/ta-s2.webp" alt="Both ducks reaching home" loading="lazy"><figcaption>Both home</figcaption></figure>
+      <figure><img src="assets/ta-s3.webp" alt="Level clear with three stars" loading="lazy"><figcaption>Level clear</figcaption></figure>
+      <figure><img src="assets/ta-s4.webp" alt="Level 1-2" loading="lazy"><figcaption>World 1</figcaption></figure>
+      <figure><img src="assets/ta-s5.webp" alt="Main menu" loading="lazy"><figcaption>Menu</figcaption></figure>
     </div>
-  </section>
+  </div></section>
 </div>
 
 <!-- ================= UNWRAP ================= -->
 <div class="view" id="v-unwrap" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/uw-s2.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">PRE-LAUNCH · PUZZLE</p>
-      <div class="idrow">
-        <img class="appicon" src="assets/uw-icon.png" alt="Unwrap app icon">
-        <h1>Unwrap</h1>
-      </div>
+  <div class="ph-banner"><img src="assets/unwrap-card.webp" width="1200" height="586" alt="Unwrap key art" loading="lazy"></div>
+  <section class="ph"><div class="wrap ph-grid">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge pre">PRE-LAUNCH</span><span class="badge year">2026</span></div>
+      <div class="idrow"><img class="appicon" src="assets/uw-icon.webp" width="76" height="76" alt="Unwrap app icon" loading="lazy"><h1>Unwrap</h1></div>
       <p class="lede">Drop a 3D solid on a sketched page and it unfolds into a path.</p>
-      <div class="cta">
-        <button class="btn px" type="button" data-scroll="uw-trailer">TRAILER</button>
-      </div>
+      <div class="cta"><button class="btn" type="button" data-trailer="uw-trailer">▶ Watch the trailer</button></div>
       <div class="facts">
         <div><span>YEAR</span><b>2026</b></div>
         <div><span>ROLE</span><b>Solo developer</b></div>
@@ -724,59 +625,47 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
         <div><span>PLATFORM</span><b>Android</b></div>
       </div>
     </div>
-  </div>
+    <div class="ph-media" id="uw-trailer"><div class="phone"><video data-auto data-full="assets/uw-trailer.mp4" muted loop playsinline preload="none" poster="assets/uw-loop-poster.webp" aria-label="Unwrap gameplay"><source src="assets/uw-loop.mp4" type="video/mp4"></video><button class="sound" type="button" data-trailer="uw-trailer">▶ Trailer with sound</button></div><p class="cap">Captured in game</p></div>
+  </div></section>
 
-  <section class="block" id="uw-trailer">
-    <div class="wrap">
-      <h2>TRAILER</h2>
-      <p>Captured in game.</p>
-      <div class="trailer-row">
-      <div class="player"><video src="assets/uw-trailer.mp4" poster="assets/uw-trailer-poster.jpg" controls playsinline preload="none"></video></div>
-      <div class="stats" style="align-self:start;grid-template-columns:repeat(2,1fr)">
+  <section class="block"><div class="wrap">
+    <div class="stats s4">
         <div><b>200</b><span>Levels</span></div>
         <div><b>20</b><span>Worlds</span></div>
         <div><b>287</b><span>Levels solver-checked every build</span></div>
         <div><b>1</b><span>Jigsaw per world</span></div>
-      </div>
-      </div>
     </div>
-  </section>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>THE IDEA</h2>
-      <p>Each solid unfolds into its net where you drop it. A face that lands on solid ground becomes floor; a face that hits a wall stands up as a wall, or as a stair to the floor above. Rotate the solid in the tray first and the same piece becomes a bridge, a barrier or a step.</p>
-      <ul class="feats">
-        <li><span class="num">01</span><h3>EVERY LEVEL CHECKED</h3><p>A solver replays every level through the game's own rules on each build, and refuses the build if any level can't be won with the solids in its tray.</p></li>
-        <li><span class="num">02</span><h3>NOTHING IS DECORATION</h3><p>Remove a key, a switch or a spring from a level and it must stop being solvable. If it doesn't, the level is regenerated.</p></li>
-        <li><span class="num">03</span><h3>A JIGSAW PER WORLD</h3><p>Each level hides one piece of the world's illustration. Finding them all is the world's achievement.</p></li>
-      </ul>
-    </div>
-  </section>
+  <section class="block"><div class="wrap">
+    <h2>The idea</h2>
+    <p>Each solid unfolds into its net where you drop it. A face that lands on solid ground becomes floor; a face that hits a wall stands up as a wall, or as a stair to the floor above. Rotate the solid in the tray first and the same piece becomes a bridge, a barrier or a step.</p>
+    <ul class="feats">
+      <li><span class="num">01</span><h3>Every level checked</h3><p>A solver replays every level through the game's own rules on each build, and refuses the build if any level can't be won with the solids in its tray.</p></li>
+      <li><span class="num">02</span><h3>Nothing is decoration</h3><p>Remove a key, a switch or a spring from a level and it must stop being solvable. If it doesn't, the level is regenerated.</p></li>
+      <li><span class="num">03</span><h3>A jigsaw per world</h3><p>Each level hides one piece of the world's illustration. Finding them all is the world's achievement.</p></li>
+    </ul>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>IN GAME</h2>
-      <div class="gal shots">
-        <figure><img src="assets/uw-s1.jpg" alt="The notebook cover" loading="lazy"><figcaption>The notebook</figcaption></figure>
-        <figure><img src="assets/uw-s2.jpg" alt="A level on the sketched page" loading="lazy"><figcaption>A level</figcaption></figure>
-        <figure><img src="assets/uw-s3.jpg" alt="World album with a jigsaw in progress" loading="lazy"><figcaption>World album</figcaption></figure>
-        <figure><img src="assets/uw-s4.jpg" alt="A completed world jigsaw with its stamp" loading="lazy"><figcaption>World complete</figcaption></figure>
-      </div>
+  <section class="block"><div class="wrap">
+    <h2>In game</h2>
+    <div class="gal tall">
+      <figure><img src="assets/uw-s1.webp" alt="The notebook cover" loading="lazy"><figcaption>The notebook</figcaption></figure>
+      <figure><img src="assets/uw-s2.webp" alt="A level on the sketched page" loading="lazy"><figcaption>A level</figcaption></figure>
+      <figure><img src="assets/uw-s3.webp" alt="World album with a jigsaw in progress" loading="lazy"><figcaption>World album</figcaption></figure>
+      <figure><img src="assets/uw-s4.webp" alt="A completed world jigsaw with its stamp" loading="lazy"><figcaption>World complete</figcaption></figure>
     </div>
-  </section>
+  </div></section>
 </div>
 
 <!-- ================= ARMS UNBOUND ================= -->
 <div class="view" id="v-armsunbound" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/armsunbound-concept.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">IN PRODUCTION · TACTICAL FANTASY</p>
-      <div class="idrow">
-        <img class="appicon" src="assets/au-icon.png" alt="Arms Unbound icon">
-        <img class="wordmark" src="assets/au-wordmark.png" alt="Arms Unbound">
-      </div>
+  <div class="ph-banner"><img src="assets/au-env1.webp" width="1200" height="604" alt="Arms Unbound environment concept: the cloning lab" loading="lazy"></div>
+  <section class="ph"><div class="wrap ph-grid">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge prod">IN PRODUCTION</span><span class="badge year">2026</span></div>
+      <div class="idrow"><img class="appicon" src="assets/au-icon.webp" width="76" height="76" alt="Arms Unbound icon" loading="lazy"><img class="wordmark" src="assets/au-wordmark.webp" width="900" height="360" alt="Arms Unbound" loading="lazy"></div>
       <p class="lede">An android who escaped being turned into a weapon breaks into the labs to free the spirits trapped inside the others.</p>
       <div class="facts">
         <div><span>YEAR</span><b>2026</b></div>
@@ -786,58 +675,130 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
         <div><span>STATUS</span><b>In production</b></div>
       </div>
     </div>
-  </div>
+    <div class="ph-media"><div class="phone"><img src="assets/au-gameplay-concept.webp" width="411" height="720" alt="Gameplay concept: a diving pistol shot" loading="lazy"></div></div>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>GAMEPLAY</h2>
-      <p>Turn-based tactics with one hand: pick a target, see exactly where the shot lands and where she ends up, then fire. Every bullet is counted; there is no reload.</p>
-      <div class="gal shots">
-        <figure><img src="assets/au-gameplay-concept.jpg" alt="Gameplay concept: a diving pistol shot" loading="lazy"><figcaption>Gameplay concept</figcaption></figure>
-        <figure><img src="assets/au-g-5-04-mira.jpg" alt="In game: aiming with vision cones and attack areas" loading="lazy"><figcaption>Aiming</figcaption></figure>
-        <figure><img src="assets/au-g-tiro.jpg" alt="In game: a shotgun shot" loading="lazy"><figcaption>Shotgun</figcaption></figure>
+  <section class="block"><div class="wrap">
+    <h2>Gameplay</h2>
+    <p>Turn-based tactics with one hand: pick a target, see exactly where the shot lands and where she ends up, then fire. Every bullet is counted; there is no reload.</p>
+    <div class="gal tall">
+      <figure><img src="assets/au-g-5-04-mira.webp" alt="In game: aiming with vision cones and attack areas" loading="lazy"><figcaption>Aiming</figcaption></figure>
+      <figure><img src="assets/au-g-tiro.webp" alt="In game: a shotgun shot" loading="lazy"><figcaption>Shotgun</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Environments</h2>
+    <p>Each act breaks into a different kind of lab, built from a modular kit that reads at a glance: magenta marks the zone edges, yellow and black stripes mark low cover.</p>
+    <div class="gal env">
+      <figure class="core"><img src="assets/armsunbound-concept.webp" width="787" height="1400" alt="The spirit containment core" loading="lazy"><figcaption>The containment core</figcaption></figure>
+      <figure><img src="assets/au-env1.webp" width="1200" height="604" alt="Act I: the cradle, a cloning lab" loading="lazy"><figcaption>Act I · The Cradle</figcaption></figure>
+      <figure><img src="assets/au-env2.webp" width="1200" height="604" alt="Act III: the violet tower, a conversion lab" loading="lazy"><figcaption>Act III · The Violet Tower</figcaption></figure>
+    </div>
+  </div></section>
+</div>
+
+<!-- ================= BOTRAID ================= -->
+<div class="view" id="v-botraid" hidden>
+  <div class="wrap"><div class="ph-banner inset"><img src="assets/br-feature.webp" width="1024" height="576" alt="BotRaid: robots fighting across the board" loading="lazy"><img class="bot" src="assets/br-bot-brawler-480.webp" width="460" height="412" alt="" loading="lazy"></div></div>
+  <section class="ph"><div class="wrap ph-grid">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge live">ON GOOGLE PLAY</span><span class="badge year">2026</span></div>
+      <div class="idrow"><img class="appicon" src="assets/br-store-icon.webp" width="76" height="76" alt="BotRaid app icon" loading="lazy"><img class="wordmark" src="assets/botraid-wordmark.webp" width="800" height="329" alt="BotRaid — Robot Puzzle Battles" loading="lazy"></div>
+      <p class="lede">Place your robots. Press FIGHT. The ground is decided while you watch — and you can keep adding robots as it plays out.</p>
+      <div class="cta">
+        <a class="gplay" href="https://play.google.com/store/apps/details?id=com.chilltado.botconquest&amp;hl=en" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#gp"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
+      </div>
+      <div class="facts">
+        <div><span>YEAR</span><b>2026</b></div>
+        <div><span>ROLE</span><b>Solo developer</b></div>
+        <div><span>SCOPE</span><b>Design, code, release</b></div>
+        <div><span>ENGINE</span><b>Unity 6 · URP</b></div>
+        <div><span>PLATFORM</span><b>Android</b></div>
+        <div><span>BACKEND</span><b>Go</b></div>
       </div>
     </div>
-  </section>
+    <div class="ph-media"><div class="yt v" data-yt="rutav7YaCOA" data-title="BotRaid trailer"><img src="assets/br-n2.webp" alt="BotRaid trailer" loading="lazy"><button type="button" aria-label="Play the BotRaid trailer"><span>▶</span></button></div></div>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>ENVIRONMENTS</h2>
-      <p>Each act breaks into a different kind of lab, built from a modular kit that reads at a glance: magenta marks the zone edges, yellow and black stripes mark low cover.</p>
-      <div class="gal g3">
-        <figure><img src="assets/au-env1.jpg" alt="Act I: the cradle, a cloning lab" loading="lazy"><figcaption>Act I · The Cradle</figcaption></figure>
-        <figure><img src="assets/au-env2.jpg" alt="Act III: the violet tower, a conversion lab" loading="lazy"><figcaption>Act III · The Violet Tower</figcaption></figure>
-        <figure><img src="assets/armsunbound-concept.jpg" alt="The spirit containment core" loading="lazy"><figcaption>The containment core</figcaption></figure>
-      </div>
+  <section class="block"><div class="wrap">
+    <div class="stats s3">
+      <div><b>3</b><span>Stars per board</span></div>
+      <div><b>4</b><span>Cards in hand</span></div>
+      <div><b>5</b><span>Part rarities</span></div>
+      <div><b>3</b><span>Tutorial boards</span></div>
+      <div><b>12</b><span>Languages</span></div>
+      <div><b>10K+</b><span>Play downloads</span></div>
     </div>
-  </section>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>SPIRITS</h2>
-      <p>Spirits become weapons. Each high-grade spirit has its own weapon born from it, and its own family of smaller souls.</p>
-      <div class="gal g3" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-        <figure><img src="assets/au-c1.jpg" alt="High-grade spirit: Baku" loading="lazy"><figcaption>Baku</figcaption></figure>
-        <figure><img src="assets/au-c2.jpg" alt="High-grade spirit: Tengu" loading="lazy"><figcaption>Tengu</figcaption></figure>
-        <figure><img src="assets/au-c3.jpg" alt="A spirit weapon" loading="lazy"><figcaption>Spirit weapon</figcaption></figure>
-      </div>
+  <section class="block"><div class="wrap">
+    <h2>The design problem</h2>
+    <p>The first BotRaid was an idle war on endlessly docking platforms. It kept the player waiting and gave them nothing to decide, so it was rebuilt as a puzzle: one board, one enemy formation, one question. The energy bar does not move until you press FIGHT, and after that it never stops, so the press is not the end of your turn. A board is won by occupation — stand on ground the enemy is not standing on and it changes hands.</p>
+    <ul class="feats">
+      <li><span class="num">01</span><h3>A campaign of boards</h3><p>Every board is its own question about one formation. Gold is the only thing carried between boards.</p></li>
+      <li><span class="num">02</span><h3>Three stars, three families</h3><p>One star each for time, survival and restraint, so no single overwhelming force answers all three.</p></li>
+      <li><span class="num">03</span><h3>Ground, not kill counts</h3><p>Ground is claimed grid by grid on both sides. Take an enemy grid outright and it changes sides; lose your last one and the board is over.</p></li>
+      <li><span class="num">04</span><h3>An opponent that plays</h3><p>No waves. The enemy adds robots through the fight on its own energy, like a second player.</p></li>
+      <li><span class="num">05</span><h3>Parts with rarity</h3><p>Fit parts to a chassis, from Standard to Legendary. Duplicates level them, and what you fit is charged against your energy ceiling.</p></li>
+      <li><span class="num">06</span><h3>The tutorial is chapter zero</h3><p>Three boards that can only be won by doing the thing they teach, each with one line over it. Checked by simulation over 2000 seeds.</p></li>
+    </ul>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>In game</h2>
+    <div class="gal tall">
+      <figure><img src="assets/br-n1.webp" alt="The formation screen: a hand of four cards, energy and the FIGHT button" loading="lazy"><figcaption>Build your formation</figcaption></figure>
+      <figure><img src="assets/br-n2.webp" alt="Robots fighting across the grids" loading="lazy"><figcaption>The battle</figcaption></figure>
+      <figure><img src="assets/br-n3.webp" alt="The roster of robots" loading="lazy"><figcaption>Robots</figcaption></figure>
+      <figure><img src="assets/br-n4.webp" alt="A part recovery ceremony" loading="lazy"><figcaption>Parts</figcaption></figure>
     </div>
-  </section>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Chassis concepts</h2>
+    <p>Each chassis is a silhouette first — a player has to read what a robot does from across the board, before any tooltip.</p>
+    <div class="bots">
+      <figure><img src="assets/br-bot-brawler.webp" alt="Brawler concept art" loading="lazy"><figcaption>BRAWLER</figcaption></figure>
+      <figure><img src="assets/br-bot-grappler.webp" alt="Grappler concept art" loading="lazy"><figcaption>GRAPPLER</figcaption></figure>
+      <figure><img src="assets/br-bot-missiler.webp" alt="Missiler concept art" loading="lazy"><figcaption>MISSILER</figcaption></figure>
+      <figure><img src="assets/br-bot-healer.webp" alt="Healer concept art" loading="lazy"><figcaption>HEALER</figcaption></figure>
+      <figure><img src="assets/br-bot-shielder.webp" alt="Shielder concept art" loading="lazy"><figcaption>SHIELDER</figcaption></figure>
+      <figure><img src="assets/br-bot-railgun.webp" alt="Railgun concept art" loading="lazy"><figcaption>RAILGUN</figcaption></figure>
+      <figure><img src="assets/br-bot-landmine.webp" alt="Landmine concept art" loading="lazy"><figcaption>LANDMINE</figcaption></figure>
+      <figure><img src="assets/br-bot-overlord.webp" alt="Overlord concept art" loading="lazy"><figcaption>OVERLORD</figcaption></figure>
+      <figure><img src="assets/br-bot-turret.webp" alt="Turret concept art" loading="lazy"><figcaption>TURRET</figcaption></figure>
+      <figure><img src="assets/br-bot-mortar.webp" alt="Mortar concept art" loading="lazy"><figcaption>MORTAR</figcaption></figure>
+      <figure><img src="assets/br-bot-sentinel.webp" alt="Sentinel concept art" loading="lazy"><figcaption>SENTINEL</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <h2>Built with</h2>
+    <ul class="chips">
+      <li>Unity 6 · URP</li><li>C#</li><li>UI Toolkit</li><li>Custom ECS-lite architecture</li>
+      <li>Go backend</li><li>Cloud save</li><li>Play Games Services</li><li>Firebase Crashlytics</li>
+      <li>Remote Config</li><li>LevelPlay mediation</li><li>Daily boards and challenges</li><li>12 localisations</li>
+    </ul>
+    <div class="notice">Fully offline-capable: no part of the gameplay depends on the network. Leaderboards and cloud save are optional and degrade silently when there is no connection.</div>
+    <p class="muted" style="margin-top:22px">
+      <a href="https://chilltado.github.io/botraid-legal/privacy-policy">Privacy policy</a> ·
+      <a href="https://chilltado.github.io/botraid-legal/terms-of-service">Terms of service</a>
+    </p>
+  </div></section>
 </div>
 
 <!-- ================= PACKET ================= -->
 <div class="view" id="v-packet" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/cr-packet-1.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">CASE STUDY · SHIPPED · HACKATHON WINNER</p>
-      <div class="idrow">
-        <img class="appicon" src="assets/cr-packet-icon.png" alt="Packet app icon">
-        <h1>Packet</h1>
-      </div>
+  <section class="ph"><div class="wrap ph-grid wide-media">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge live">ON GOOGLE PLAY</span><span class="badge win">🏆 HACKATHON WINNER</span></div>
+      <div class="idrow"><img class="appicon" src="assets/cr-packet-icon.webp" width="76" height="76" alt="Packet app icon" loading="lazy"><h1>Packet</h1></div>
       <p class="lede">A 3D delivery platformer where the levels are the content: run the route, or build your own, clear it yourself, and publish it for everyone else to run.</p>
       <div class="cta">
-        <a class="btn px" href="https://play.google.com/store/apps/details?id=com.hackathon38.group38.packet" target="_blank" rel="noopener">GOOGLE PLAY</a>
+        <a class="gplay" href="https://play.google.com/store/apps/details?id=com.hackathon38.group38.packet" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#gp"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
       </div>
       <div class="facts">
         <div><span>AWARD</span><b>Hackathon winner</b></div>
@@ -847,224 +808,189 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
         <div><span>SCORING</span><b>Per-level leaderboards</b></div>
       </div>
     </div>
-  </div>
+    <div class="ph-media"><div class="yt" data-yt="Ov8fMyr8Gew" data-title="Packet video"><img src="https://i.ytimg.com/vi/Ov8fMyr8Gew/maxresdefault.jpg" alt="Packet video" loading="lazy"><button type="button" aria-label="Play the Packet video"><span>▶</span></button></div></div>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>VIDEO</h2>
-      <div class="yt" data-yt="Ov8fMyr8Gew" style="max-width:760px">
-        <img src="https://i.ytimg.com/vi/Ov8fMyr8Gew/maxresdefault.jpg" alt="Packet video" loading="lazy">
-        <button type="button" aria-label="Play the Packet video"><span>&#9654; PLAY</span></button>
-      </div>
+  <section class="block"><div class="wrap">
+    <h2>Build, clear, publish</h2>
+    <p>A level only reaches other players once its author has cleared it themselves — which keeps the published set playable without anyone moderating it by hand. Every route is scored, so the same level is worth running again for a better time.</p>
+    <div class="gal wide">
+      <figure><img src="assets/cr-packet-1.webp" alt="Making a delivery through a level" loading="lazy"><figcaption>Make the delivery</figcaption></figure>
+      <figure><img src="assets/cr-packet-2.webp" alt="Building a route in the editor" loading="lazy"><figcaption>Build your own routes</figcaption></figure>
+      <figure><img src="assets/cr-packet-3.webp" alt="Clearing a level to publish it" loading="lazy"><figcaption>Clear it to publish it</figcaption></figure>
     </div>
-  </section>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>BUILD, CLEAR, PUBLISH</h2>
-      <p>A level only reaches other players once its author has cleared it themselves — which keeps the published set playable without anyone moderating it by hand. Every route is scored, so the same level is worth running again for a better time.</p>
-      <div class="gal g3">
-        <figure><img src="assets/cr-packet-1.jpg" alt="Making a delivery through a level" loading="lazy"><figcaption>Make the delivery</figcaption></figure>
-        <figure><img src="assets/cr-packet-2.jpg" alt="Building a route in the editor" loading="lazy"><figcaption>Build your own routes</figcaption></figure>
-        <figure><img src="assets/cr-packet-3.jpg" alt="Clearing a level to publish it" loading="lazy"><figcaption>Clear it to publish it</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="wrap">
-      <h2>BUILT WITH</h2>
-      <p>Player-built levels are uploaded to object storage and served back through a CDN, behind a Go service running on EC2 from an ECR image — so a published route reaches other players without shipping a build. On the client, movement is physics-driven and playable on a gamepad or on touch, with the interface in UI Toolkit.</p>
-      <ul class="chips" style="margin-top:20px">
-        <li>Unity</li><li>C#</li><li>UI Toolkit</li><li>Physics-driven movement</li><li>Gamepad + touch controls</li>
-        <li>Go backend</li><li>AWS EC2</li><li>ECR</li><li>S3 + CDN</li><li>User-generated levels</li>
-      </ul>
-    </div>
-  </section>
+  <section class="block"><div class="wrap">
+    <h2>Built with</h2>
+    <p>Player-built levels are uploaded to object storage and served back through a CDN, behind a Go service running on EC2 from an ECR image — so a published route reaches other players without shipping a build. On the client, movement is physics-driven and playable on a gamepad or on touch, with the interface in UI Toolkit.</p>
+    <ul class="chips">
+      <li>Unity</li><li>C#</li><li>UI Toolkit</li><li>Physics-driven movement</li><li>Gamepad + touch controls</li>
+      <li>Go backend</li><li>AWS EC2</li><li>ECR</li><li>S3 + CDN</li><li>User-generated levels</li>
+    </ul>
+  </div></section>
 </div>
 
 <!-- ================= SMARTWATCH ================= -->
 <div class="view" id="v-smartwatch" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/sw-poster.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">CASE STUDY · SHIPPED</p>
-      <h1>Two apps for a smartwatch</h1>
+  <section class="ph"><div class="wrap ph-grid wide-media">
+    <div>
+      <a class="back" href="#/">← All games</a>
+      <div class="badges"><span class="badge ship">SHIPPED</span><span class="badge year">2021–2022</span></div>
+      <div class="idrow"><h1>Two apps for a smartwatch</h1></div>
       <p class="lede">A virtual pet and a science game for the Moochies kids' smartwatch, both built for a 184×224 screen — roughly a fifth of a phone's pixel budget, tapped by fingers that are not adult-sized.</p>
       <div class="facts">
+        <div><span>YEARS</span><b>2021–2022</b></div>
         <div><span>DEVICE</span><b>Moochies smartwatch</b></div>
         <div><span>RESOLUTION</span><b>184×224</b></div>
         <div><span>AUDIENCE</span><b>Kids</b></div>
-        <div><span>APPS</span><b>Tamagotchi · SpaceQuizz</b></div>
       </div>
     </div>
-  </div>
+    <div class="ph-media"><div class="mini-art watch" style="border-radius:24px;aspect-ratio:4/3"><img class="pixel" src="assets/mo-1.webp" width="368" height="448" alt="Tamagotchi main screen" loading="lazy"><img class="pixel" src="assets/sw-poster.webp" width="368" height="448" alt="SpaceQuizz on the watch" loading="lazy"></div></div>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>TAMAGOTCHI</h2>
-      <p>Raise a pet, feed it, wash it and take it to town. At this size the interface has to be one decision per screen: the map is the navigation, icons are the labels, and nothing depends on text a young player has to read.</p>
-      <div class="devices">
-        <div class="device"><img src="assets/mo-1.jpg" alt="Main screen with the pet in its room" loading="lazy"><p>MAIN</p></div>
-        <div class="device"><img src="assets/mo-2.jpg" alt="Pet selection screen" loading="lazy"><p>SET PET</p></div>
-        <div class="device"><img src="assets/mo-3.jpg" alt="Inventory screen" loading="lazy"><p>INVENTORY</p></div>
-        <div class="device"><img src="assets/mo-4.jpg" alt="Town map with shop and home markers" loading="lazy"><p>MAP</p></div>
-        <div class="device"><img src="assets/mo-5.jpg" alt="Washing mini game" loading="lazy"><p>WASH</p></div>
-      </div>
-      <ul class="feats">
-        <li><span class="num">01</span><h3>CARE</h3><p>Feeding, washing and play keep the pet's state up, each through its own short mini-game rather than a menu.</p></li>
-        <li><span class="num">02</span><h3>TOWN</h3><p>A map screen turns navigation into a place: home, shop and activities are markers a child taps, not a list.</p></li>
-        <li><span class="num">03</span><h3>COLLECT</h3><p>An inventory of items and outfits gives the loop something to spend on and something to come back for.</p></li>
-      </ul>
+  <section class="block"><div class="wrap">
+    <h2>Tamagotchi</h2>
+    <p>Raise a pet, feed it, wash it and take it to town. At this size the interface has to be one decision per screen: the map is the navigation, icons are the labels, and nothing depends on text a young player has to read.</p>
+    <div class="devices">
+      <div class="device"><img class="pixel" src="assets/mo-1.webp" alt="Main screen with the pet in its room" loading="lazy"><p>MAIN</p></div>
+      <div class="device"><img class="pixel" src="assets/mo-2.webp" alt="Pet selection screen" loading="lazy"><p>SET PET</p></div>
+      <div class="device"><img class="pixel" src="assets/mo-3.webp" alt="Inventory screen" loading="lazy"><p>INVENTORY</p></div>
+      <div class="device"><img class="pixel" src="assets/mo-4.webp" alt="Town map with shop and home markers" loading="lazy"><p>MAP</p></div>
+      <div class="device"><img class="pixel" src="assets/mo-5.webp" alt="Washing mini game" loading="lazy"><p>WASH</p></div>
     </div>
-  </section>
+    <ul class="feats">
+      <li><span class="num">01</span><h3>Care</h3><p>Feeding, washing and play keep the pet's state up, each through its own short mini-game rather than a menu.</p></li>
+      <li><span class="num">02</span><h3>Town</h3><p>A map screen turns navigation into a place: home, shop and activities are markers a child taps, not a list.</p></li>
+      <li><span class="num">03</span><h3>Collect</h3><p>An inventory of items and outfits gives the loop something to spend on and something to come back for.</p></li>
+    </ul>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <h2>SPACEQUIZZ</h2>
-      <p>A science game for the same watch: quiz rounds, ordering the planets by hand, naming moons and tracing constellations star by star. Recorded on a phone and squashed back to the watch’s 184×224 proportions.</p>
-      <div class="devices">
-        <div class="device"><img src="assets/sw-1.gif" alt="Menu with the game modes" loading="lazy"><p>MENU</p></div>
-        <div class="device"><img src="assets/sw-2.gif" alt="Quiz question about the solar system" loading="lazy"><p>QUIZ</p></div>
-        <div class="device"><img src="assets/sw-3.gif" alt="Dragging planets into order" loading="lazy"><p>ORDER THE PLANETS</p></div>
-        <div class="device"><img src="assets/sw-4.gif" alt="Naming the moons of a planet" loading="lazy"><p>NAME THE MOONS</p></div>
-        <div class="device"><img src="assets/sw-5.gif" alt="Tracing the Columba constellation" loading="lazy"><p>CONSTELLATIONS</p></div>
-        <div class="device"><img src="assets/sw-6.gif" alt="Tracing the Capricornus constellation" loading="lazy"><p>CAPRICORNUS</p></div>
-      </div>
-      <ul class="feats">
-        <li><span class="num">01</span><h3>DRAG, NOT TYPE</h3><p>Every answer is a drag or a tap on the thing itself — planets into slots, a line between stars — because a watch has no keyboard and a kid has no patience for one.</p></li>
-        <li><span class="num">02</span><h3>TIMED ROUNDS</h3><p>Each round runs against a clock with a score, so replaying the same content has a reason to happen.</p></li>
-        <li><span class="num">03</span><h3>REAL CONTENT</h3><p>Actual moons, actual constellations. The game teaches names that exist, which is the whole point of putting it on a kid's wrist.</p></li>
-      </ul>
+  <section class="block"><div class="wrap">
+    <h2>SpaceQuizz</h2>
+    <p>A science game for the same watch: quiz rounds, ordering the planets by hand, naming moons and tracing constellations star by star. Recorded on a phone and squashed back to the watch’s 184×224 proportions.</p>
+    <div class="devices">
+      <div class="device"><img src="assets/sw-1.gif" alt="Menu with the game modes" loading="lazy"><p>MENU</p></div>
+      <div class="device"><img src="assets/sw-2.gif" alt="Quiz question about the solar system" loading="lazy"><p>QUIZ</p></div>
+      <div class="device"><img src="assets/sw-3.gif" alt="Dragging planets into order" loading="lazy"><p>ORDER THE PLANETS</p></div>
+      <div class="device"><img src="assets/sw-4.gif" alt="Naming the moons of a planet" loading="lazy"><p>NAME THE MOONS</p></div>
+      <div class="device"><img src="assets/sw-5.gif" alt="Tracing the Columba constellation" loading="lazy"><p>CONSTELLATIONS</p></div>
+      <div class="device"><img src="assets/sw-6.gif" alt="Tracing the Capricornus constellation" loading="lazy"><p>CAPRICORNUS</p></div>
     </div>
-  </section>
+    <ul class="feats">
+      <li><span class="num">01</span><h3>Drag, not type</h3><p>Every answer is a drag or a tap on the thing itself — planets into slots, a line between stars — because a watch has no keyboard and a kid has no patience for one.</p></li>
+      <li><span class="num">02</span><h3>Timed rounds</h3><p>Each round runs against a clock with a score, so replaying the same content has a reason to happen.</p></li>
+      <li><span class="num">03</span><h3>Real content</h3><p>Actual moons, actual constellations. The game teaches names that exist, which is the whole point of putting it on a kid's wrist.</p></li>
+    </ul>
+  </div></section>
 </div>
 
 <!-- ================= ITCH ================= -->
 <div class="view" id="v-itch" hidden>
-  <div class="phero">
-    <div class="bg"><img src="assets/itch-dangerroom-2.jpg" alt="" loading="lazy"></div>
-    <div class="wrap">
-      <p class="eyebrow">JAMS &amp; PROTOTYPES</p>
-      <h1>itch.io</h1>
-      <p class="lede">Small games built fast — jam entries and prototypes where the point was to get a loop standing and see whether it was fun. Most run straight in the browser.</p>
-      <div class="cta">
-        <a class="btn px" href="https://chilltado.itch.io/" target="_blank" rel="noopener">CHILLTADO.ITCH.IO</a>
-      </div>
-      <div class="facts">
-        <div><span>GAMES</span><b>4</b></div>
-        <div><span>PLATFORM</span><b>Browser · desktop</b></div>
-        <div><span>SCOPE</span><b>Jam builds and prototypes</b></div>
-      </div>
-    </div>
-  </div>
+  <section class="ph"><div class="wrap">
+    <a class="back" href="#/">← All games</a>
+    <div class="badges"><span class="badge jam">GAME JAMS</span><span class="badge year">2020–2023</span></div>
+    <div class="idrow"><h1>Jams &amp; prototypes</h1></div>
+    <p class="lede">Small games built fast — jam entries where the point was to get a loop standing and see whether it was fun.</p>
+    <div class="cta"><a class="btn" href="https://chilltado.itch.io/" target="_blank" rel="noopener">chilltado.itch.io <span class="arr">→</span></a></div>
+  </div></section>
 
-  <section class="block">
-    <div class="wrap">
-      <div class="itchhead">
-        <img src="assets/itch-dangerroom-cover.jpg" alt="DangerRoom cover">
-        <div>
-          <h2>DANGERROOM</h2>
-          <p>Build, power up and survive each wave in small interconnected rooms.</p>
-          <a class="btn ghost px" href="https://chilltado.itch.io/dangerroom" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
-        </div>
-      </div>
-      <div class="gal g3">
-        <figure><img src="assets/itch-dangerroom-1.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-dangerroom-2.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-dangerroom-3.jpg" alt="DangerRoom screenshot" loading="lazy"></figure>
+  <section class="block"><div class="wrap">
+    <div class="jamrow">
+      <img src="assets/itch-dangerroom-cover.webp" width="630" height="500" alt="DangerRoom cover" loading="lazy">
+      <div>
+        <div class="badges"><span class="badge jam">MINI JAM 133</span><span class="badge year">2023</span></div>
+        <h2>DangerRoom</h2>
+        <p>Build, power up and survive each wave in small interconnected rooms.</p>
+        <a class="btn ghost" href="https://chilltado.itch.io/dangerroom" target="_blank" rel="noopener">Open on itch.io <span class="arr">→</span></a>
       </div>
     </div>
-  </section>
-  <section class="block">
-    <div class="wrap">
-      <div class="itchhead">
-        <img src="assets/itch-resourcefight-cover.jpg" alt="Resourcefight cover">
-        <div>
-          <h2>RESOURCEFIGHT</h2>
-          <p>Run missions broadcast to the whole city to win the resources you need to survive.</p>
-          <a class="btn ghost px" href="https://chilltado.itch.io/resourcefight" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
-        </div>
-      </div>
-      <div class="gal g3">
-        <figure><img src="assets/itch-resourcefight-1.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-resourcefight-2.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-resourcefight-3.jpg" alt="Resourcefight screenshot" loading="lazy"></figure>
+    <div class="gal wide two">
+      <figure><img src="assets/itch-dangerroom-2.webp" alt="DangerRoom screenshot" loading="lazy"></figure>
+      <figure><img src="assets/itch-dangerroom-3.webp" alt="DangerRoom screenshot" loading="lazy"></figure>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="jamrow">
+      <img src="assets/itch-resourcefight-cover.webp" width="480" height="320" alt="Resourcefight cover" loading="lazy">
+      <div>
+        <div class="badges"><span class="badge jam">BEGINNER'S CIRCLE JAM</span><span class="badge year">2020</span></div>
+        <h2>Resourcefight</h2>
+        <p>Run missions broadcast to the whole city to win the resources you need to survive.</p>
+        <a class="btn ghost" href="https://chilltado.itch.io/resourcefight" target="_blank" rel="noopener">Open on itch.io <span class="arr">→</span></a>
       </div>
     </div>
-  </section>
-  <section class="block">
-    <div class="wrap">
-      <div class="itchhead">
-        <img src="assets/itch-hit-n-brawl-cover.jpg" alt="Hit 'n' Brawl cover">
-        <div>
-          <h2>HIT 'N' BRAWL</h2>
-          <p>A brawler crossed with a shooter and a card game.</p>
-          <a class="btn ghost px" href="https://chilltado.itch.io/hit-n-brawl" target="_blank" rel="noopener">DOWNLOAD &gt;</a>
-        </div>
-      </div>
-      <div class="gal g3">
-        <figure><img src="assets/itch-hit-n-brawl-1.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-hit-n-brawl-2.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-hit-n-brawl-3.jpg" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+    <div class="gal wide two">
+      <figure><img src="assets/itch-resourcefight-2.webp" alt="Resourcefight screenshot" loading="lazy"></figure>
+      <figure><img src="assets/itch-resourcefight-3.webp" alt="Resourcefight screenshot" loading="lazy"></figure>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="jamrow">
+      <img src="assets/itch-emancipsychic-cover.webp" width="320" height="270" alt="Emancipsychic cover" loading="lazy">
+      <div>
+        <div class="badges"><span class="badge jam">32-BIT HOLIDAY JAM</span><span class="badge year">2020</span></div>
+        <h2>Emancipsychic</h2>
+        <p>Cross the city dodging enemies to win freedom for psychics — and a new international holiday.</p>
+        <a class="btn ghost" href="https://chilltado.itch.io/emancipsychic" target="_blank" rel="noopener">Open on itch.io <span class="arr">→</span></a>
       </div>
     </div>
-  </section>
-  <section class="block">
-    <div class="wrap">
-      <div class="itchhead">
-        <img src="assets/itch-emancipsychic-cover.jpg" alt="Emancipsychic cover">
-        <div>
-          <h2>EMANCIPSYCHIC</h2>
-          <p>Cross the city dodging enemies to win freedom for psychics — and a new international holiday.</p>
-          <a class="btn ghost px" href="https://chilltado.itch.io/emancipsychic" target="_blank" rel="noopener">PLAY IN THE BROWSER &gt;</a>
-        </div>
-      </div>
-      <div class="gal g3">
-        <figure><img src="assets/itch-emancipsychic-1.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-emancipsychic-2.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
-        <figure><img src="assets/itch-emancipsychic-3.jpg" alt="Emancipsychic screenshot" loading="lazy"></figure>
+    <div class="gal wide two">
+      <figure><img src="assets/itch-emancipsychic-2.webp" alt="Emancipsychic screenshot" loading="lazy"></figure>
+      <figure><img src="assets/itch-emancipsychic-3.webp" alt="Emancipsychic screenshot" loading="lazy"></figure>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="jamrow">
+      <img src="assets/itch-hit-n-brawl-cover.webp" width="218" height="224" alt="Hit 'n' Brawl cover" loading="lazy">
+      <div>
+        <div class="badges"><span class="badge jam">MIX AND GAME JAM</span><span class="badge year">2020</span></div>
+        <h2>Hit 'n' Brawl</h2>
+        <p>A brawler crossed with a shooter and a card game.</p>
+        <a class="btn ghost" href="https://chilltado.itch.io/hit-n-brawl" target="_blank" rel="noopener">Download on itch.io <span class="arr">→</span></a>
       </div>
     </div>
-  </section>
+    <div class="gal wide two">
+      <figure><img src="assets/itch-hit-n-brawl-2.webp" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+      <figure><img src="assets/itch-hit-n-brawl-3.webp" alt="Hit 'n' Brawl screenshot" loading="lazy"></figure>
+    </div>
+  </div></section>
 </div>
 
 <!-- ================= ABOUT ================= -->
 <div class="view" id="v-about" hidden>
-  <div class="about">
-    <div class="wrap">
-      <p class="eyebrow">ABOUT</p>
-      <h1>I make games from first prototype to release.</h1>
-      <p>Gameplay systems, tools, backend, storefront and whatever else shipping asks for. My work has been mobile so far, but the part I actually do — gameplay systems, tools, backend and getting a build out the door — is not platform-specific, and I am open to any opportunity in games.</p>
-      <p>I work in Unity 6 with URP and C#, on an architecture where every feature owns exactly one concern. That is what makes it possible to keep two mid-sized projects running in parallel without one becoming the other's debt.</p>
-      <p>BotRaid is live on Google Play, localised into 12 languages, with cloud save, weekly leaderboards and full offline progression. Tag Along and Unwrap are in pre-launch and Arms Unbound is in production. I also worked on Zooba, War Machines and Packet (a hackathon winner), and on two apps for the Moochies smartwatch.</p>
+  <div class="about"><div class="wrap">
+    <p class="eyebrow">ABOUT</p>
+    <h1>I make games from first prototype to release.</h1>
+    <p>Gameplay systems, tools, backend, storefront and whatever else shipping asks for. My work has been mobile so far, but the part I actually do — gameplay systems, tools, backend and getting a build out the door — is not platform-specific, and I am open to any opportunity in games.</p>
+    <p>I work in Unity 6 with URP and C#, on an architecture where every feature owns exactly one concern. That is what makes it possible to keep several projects running in parallel without one becoming the other's debt.</p>
+    <p>BotRaid is live on Google Play, localised into 12 languages, with cloud save, weekly leaderboards and full offline progression. Tag Along and Unwrap are in pre-launch and Arms Unbound is in production. I also worked on Zooba, War Machines and Packet (a hackathon winner), and on two apps for the Moochies smartwatch.</p>
 
-      <div class="sec">
-        <div class="sec-head"><h2>STACK</h2><i class="line"></i><span>DAY TO DAY</span></div>
-        <div class="caps">
-          <div><h3>ENGINE</h3><p>Unity 6, URP, UI Toolkit, VFX Graph, Addressables, Burst.</p></div>
-          <div><h3>CODE</h3><p>C#, system-oriented architecture with ScriptableObject data, editor test coverage.</p></div>
-          <div><h3>BACKEND</h3><p>Go, protobuf, containers. Leaderboards, cloud save, identity.</p></div>
-          <div><h3>SHIPPING</h3><p>Google Play, Play Games Services, Firebase Crashlytics, Remote Config, ad mediation, IARC and Data Safety.</p></div>
-        </div>
-      </div>
-
-      <div class="contact">
-        <a class="btn px" href="mailto:chilltadolab@gmail.com">CHILLTADOLAB@GMAIL.COM</a>
-        <a class="btn ghost px" href="https://github.com/chilltado" target="_blank" rel="noopener">GITHUB</a>
-        <a class="btn ghost px" href="https://chilltado.itch.io/" target="_blank" rel="noopener">ITCH.IO</a>
+    <div class="sec" style="padding-top:64px">
+      <div class="sh"><div><p class="eyebrow">DAY TO DAY</p><h2>Stack</h2></div></div>
+      <div class="caps">
+        <div><h3>ENGINE</h3><p>Unity 6, URP, UI Toolkit, VFX Graph, Addressables, Burst.</p></div>
+        <div><h3>CODE</h3><p>C#, system-oriented architecture with ScriptableObject data, editor test coverage.</p></div>
+        <div><h3>BACKEND</h3><p>Go, protobuf, containers. Leaderboards, cloud save, identity.</p></div>
+        <div><h3>SHIPPING</h3><p>Google Play, Play Games Services, Firebase Crashlytics, Remote Config, ad mediation, IARC and Data Safety.</p></div>
       </div>
     </div>
-  </div>
+
+    <div class="cta" style="margin-top:40px">
+      <a class="btn" href="mailto:chilltadolab@gmail.com">chilltadolab@gmail.com</a>
+      <a class="btn ghost" href="https://github.com/chilltado" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="https://chilltado.itch.io/" target="_blank" rel="noopener">itch.io</a>
+    </div>
+  </div></div>
 </div>
 
 </main>
 
-<div id="lb" hidden><button class="x" aria-label="Close">X</button><img src="" alt=""></div>
+<div id="lb" hidden><button class="x" aria-label="Close">✕</button><img src="" alt="" loading="lazy"></div>
 
 <footer>
   <div class="wrap footer-in">
-    <span style="display:flex;align-items:center;gap:14px"><img src="assets/chilltado-logo.png" alt="chilltado">© <span id="year">2026</span></span>
+    <span style="display:flex;align-items:center;gap:14px"><img src="assets/chilltado-logo-140.webp" width="140" height="151" alt="chilltado" loading="lazy">© <span id="year">2026</span></span>
     <span>
       <a href="https://chilltado.github.io/botraid-legal/privacy-policy">Privacy</a> ·
       <a href="https://chilltado.github.io/botraid-legal/terms-of-service">Terms</a> ·
@@ -1077,56 +1003,92 @@ footer img{height:60px;width:auto;image-rendering:pixelated}
 <script>
 (function(){
   var routes={'#/':'v-home','#/botraid':'v-botraid','#/tagalong':'v-tagalong','#/unwrap':'v-unwrap','#/armsunbound':'v-armsunbound','#/packet':'v-packet','#/smartwatch':'v-smartwatch','#/itch':'v-itch','#/about':'v-about'};
-  var titles={'v-home':'chilltado — game developer','v-botraid':'BotRaid — chilltado','v-tagalong':'Tag Along — chilltado','v-unwrap':'Unwrap — chilltado','v-armsunbound':'Arms Unbound — chilltado','v-packet':'Packet — chilltado','v-smartwatch':'Smartwatch — chilltado','v-itch':'itch.io — chilltado','v-about':'About — chilltado'};
-  var views=document.querySelectorAll('.view'), tabs=document.querySelectorAll('.nav a.tab');
+  var titles={'v-home':'chilltado — game developer','v-botraid':'BotRaid — chilltado','v-tagalong':'Tag Along — chilltado','v-unwrap':'Unwrap — chilltado','v-armsunbound':'Arms Unbound — chilltado','v-packet':'Packet — chilltado','v-smartwatch':'Smartwatch — chilltado','v-itch':'Jams — chilltado','v-about':'About — chilltado'};
+  var views=document.querySelectorAll('.view'), tabs=document.querySelectorAll('.tabs a');
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function render(){
-    var hash=location.hash, id=routes[hash]||'v-home';
+    var hash=location.hash;
+    // In-page anchors (#now) are not routes: scroll to them and keep the current view.
+    if(hash && hash.indexOf('#/')!==0){
+      var t=document.getElementById(hash.slice(1));
+      if(t){ t.scrollIntoView({behavior:still?'auto':'smooth'}); return; }
+    }
+    var id=routes[hash]||'v-home';
     if(!routes[hash]) hash='#/';
     views.forEach(function(v){
       var on=v.id===id;
       v.hidden=!on;
-      if(on){v.classList.remove('fade');void v.offsetWidth;v.classList.add('fade');}
+      if(on){v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');}
+      else v.querySelectorAll('video').forEach(function(x){x.pause();});
     });
     tabs.forEach(function(t){
       if(t.getAttribute('href')===hash) t.setAttribute('aria-current','page');
       else t.removeAttribute('aria-current');
     });
+    var cur=document.querySelector('.tabs a[aria-current]');
+    if(cur) cur.scrollIntoView({block:'nearest',inline:'nearest'});
     document.title=titles[id];
     window.scrollTo(0,0);
   }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var h=a.getAttribute('href');
+    if(h.indexOf('#/')===0) return;
+    var t=document.getElementById(h.slice(1));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:still?'auto':'smooth'}); }
+  });
   window.addEventListener('hashchange',render);
-  if(!location.hash) location.replace('#/');
+  if(!location.hash || location.hash.indexOf('#/')!==0) history.replaceState(null,'','#/');
   render();
 
-  // A marquee só emenda se a faixa contiver a lista duas vezes: a animação anda -50%.
-  document.querySelectorAll('[data-loop]').forEach(function(t){ t.innerHTML += t.innerHTML; });
+  if('IntersectionObserver' in window){
+    var rio=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target); } });
+    },{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ rio.observe(el); });
 
-  document.querySelectorAll('[data-scroll]').forEach(function(b){
-    b.addEventListener('click',function(){
-      document.getElementById(b.dataset.scroll).scrollIntoView({behavior:'smooth'});
-    });
+    if(!still){
+      var vio=window.vio=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          var v=e.target;
+          if(e.isIntersecting){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+          else v.pause();
+        });
+      },{threshold:.35});
+      document.querySelectorAll('video[data-auto]').forEach(function(v){ vio.observe(v); });
+    }
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // The hero phone loops a short muted clip; this swaps in the full trailer with sound.
+  function playTrailer(id){
+    var box=document.getElementById(id), ph=box.querySelector('.phone'), v=ph.querySelector('video');
+    box.scrollIntoView({behavior:still?'auto':'smooth',block:'center'});
+    if(ph.classList.contains('playing')) return;
+    ph.classList.add('playing');
+    delete v.dataset.auto; if(window.vio) vio.unobserve(v);
+    v.loop=false; v.muted=false; v.controls=true; v.preload='auto';
+    v.src=v.dataset.full; v.play().catch(function(){});
+  }
+  document.querySelectorAll('[data-trailer]').forEach(function(b){
+    b.addEventListener('click',function(){ playTrailer(b.dataset.trailer); });
   });
 
   document.querySelectorAll('[data-yt]').forEach(function(box){
     box.querySelector('button').addEventListener('click',function(){
-      box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+box.dataset.yt+'?autoplay=1" title="Packet" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+box.dataset.yt+'?autoplay=1" title="'+box.dataset.title+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     });
-  });
-
-  document.querySelectorAll('[data-player]').forEach(function(p){
-    var v=p.querySelector('video'), b=p.querySelector('button');
-    b.addEventListener('click',function(){ b.remove(); v.play(); });
   });
 
   var lb=document.getElementById('lb'), lbImg=lb.querySelector('img');
   document.addEventListener('click',function(e){
     if(e.target.closest('#lb')){ lb.hidden=true; return; }
-    var src=null;
-    var fig=e.target.closest('figure');
-    if(fig && fig.querySelector('img')) src=fig.querySelector('img');
-    else if(e.target.matches('.cred .shots img')) src=e.target;
-    if(src){ lbImg.src=src.src; lbImg.alt=src.alt; lb.hidden=false; }
+    var fig=e.target.closest('.gal figure, .bots figure');
+    var src=fig ? fig.querySelector('img') : (e.target.matches('.cred .shots img') ? e.target : null);
+    if(src){ lbImg.src=src.currentSrc||src.src; lbImg.alt=src.alt; lb.hidden=false; }
   });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') lb.hidden=true; });
 
