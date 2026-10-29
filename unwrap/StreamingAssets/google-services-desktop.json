@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "851841837417",
+    "project_id": "chilltado-hypercasual",
+    "storage_bucket": "chilltado-hypercasual.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851841837417:android:a7d6701401963f3dd975f8",
+        "android_client_info": {
+          "package_name": "com.chilltado.armsunbound"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUoYSKAhqbN7-Sf9hOGBQBjq0ylc9K8FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851841837417:android:69a964b1f9816b87d975f8",
+        "android_client_info": {
+          "package_name": "com.chilltado.tagalong"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUoYSKAhqbN7-Sf9hOGBQBjq0ylc9K8FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851841837417:android:4bd6801b04c08fddd975f8",
+        "android_client_info": {
+          "package_name": "com.chilltado.unwrap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUoYSKAhqbN7-Sf9hOGBQBjq0ylc9K8FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
