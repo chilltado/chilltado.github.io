@@ -35,13 +35,13 @@
 
     var buildUrl = "Build";
     var config = {
-      dataUrl: buildUrl + "/tagalong-web-0.0.21.data.unityweb",
-      frameworkUrl: buildUrl + "/tagalong-web-0.0.21.framework.js.unityweb",
-      codeUrl: buildUrl + "/tagalong-web-0.0.21.wasm.unityweb",
+      dataUrl: buildUrl + "/tagalong-web-0.0.30.data.unityweb",
+      frameworkUrl: buildUrl + "/tagalong-web-0.0.30.framework.js.unityweb",
+      codeUrl: buildUrl + "/tagalong-web-0.0.30.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "chilltado",
       productName: "Tag Along",
-      productVersion: "0.0.21",
+      productVersion: "0.0.30",
       showBanner: showBanner,
       autoSyncPersistentDataPath: true,
       // Above 2 the fill cost grows with no visible gain on a phone.
@@ -49,7 +49,7 @@
     };
 
     var script = document.createElement("script");
-    script.src = buildUrl + "/tagalong-web-0.0.21.loader.js";
+    script.src = buildUrl + "/tagalong-web-0.0.30.loader.js";
     script.onload = function () {
       createUnityInstance(canvas, config, function (progress) {
         fill.style.width = Math.max(6, 100 * progress) + "%";
